@@ -1,4 +1,4 @@
-import logo from './platzi.webp';
+import logo from './react512.webp';
 import './App.css';
 
 function App() {
