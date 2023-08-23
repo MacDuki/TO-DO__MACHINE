@@ -1,0 +1,17 @@
+ul {
+    max-height: 20rem;
+    overflow-y: scroll;
+}
+
+ul::-webkit-scrollbar {
+    width: 5px;
+}
+
+ul::-webkit-scrollbar-track {
+    background: #983d3d; 
+  }
+
+ul::-webkit-scrollbar-thumb {
+    background: #000000; /* Color del pulgar de la barra de desplazamiento */
+    border-radius: 5px; /* Borde redondeado del pulgar */
+  }

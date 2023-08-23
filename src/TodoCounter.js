@@ -2,7 +2,10 @@
  
  function TodoCounter ({completed, total}) {
     return (
-     <h1>Has completedo {completed} de {total} tareas </h1>
+     <>
+     <h2>Tasks completed</h2> 
+     <h2 className='tasksCounter'>{completed}/{total}</h2>
+     </>
     );
   }
 
