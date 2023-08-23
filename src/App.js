@@ -1,9 +1,8 @@
+import React from 'react';
 import logo from './react512.webp';
-import './App.css';
 import {TodoItem} from './TodoItem';
 import { CreateTodoButton } from './CreateTodoButton';
 import TodoList from './TodoList';
-import React from 'react';
 import TodoCounter from './TodoCounter';
 
 const defaultTodos = [
