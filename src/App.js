@@ -34,13 +34,14 @@ function App() {
     <section className="App">
       <div className="App-header">
       <TodoCounter completed={10} total={11}/> 
-      <TodoSearch/>
+      {/* <TodoSearch/> */}
+      <CreateTodoButton/>
       <TodoList>
       {defaultTodos.map(todo => (
         <TodoItem key= {todo.text} text={todo.text}/>
       ))}
       </TodoList>
-      <CreateTodoButton/>
+      
       </div>
     </section>
   );
