@@ -8,37 +8,28 @@ import { TodoSearch } from './TodoSearch';
 
 const defaultTodos = [
 {text: "Comprar Pan", completed: false},
-{text: "Comprar Agua", completed: true},
-{text: "Comprar Dulce de leche", completed: true},
-{text: "Comprar Frutillas", completed: true},
-{text: "Comprar Anana", completed: true},
-{text: "Comprar Pan", completed: false},
-{text: "Comprar Agua", completed: true},
-{text: "Comprar Dulce de leche", completed: true},
-{text: "Comprar Frutillas", completed: true},
-{text: "Comprar Anana", completed: true},
-{text: "Comprar Pan", completed: false},
-{text: "Comprar Agua", completed: true},
-{text: "Comprar Dulce de leche", completed: true},
-{text: "Comprar Frutillas", completed: true},
-{text: "Comprar Anana", completed: true},
-{text: "Comprar Pan", completed: false},
-{text: "Comprar Agua", completed: true},
+{text: "Comprar Agua", completed: false},
 {text: "Comprar Dulce de leche", completed: true},
 {text: "Comprar Frutillas", completed: true},
 {text: "Comprar Anana", completed: true},
 ];
 
 function App() {
+  const [todos, setTodos] = React.useState(defaultTodos);
+  const completedTodos = todos.filter(todo => !!todo.completed).length ;
+  const totalTodos = todos.length;
   return (
     <section className="App">
       <div className="App-header">
-      <TodoCounter completed={10} total={11}/> 
+      <TodoCounter 
+      completed={completedTodos} 
+      total={totalTodos}
+      /> 
       {/* <TodoSearch/> */}
       <CreateTodoButton/>
       <TodoList>
       {defaultTodos.map(todo => (
-        <TodoItem key= {todo.text} text={todo.text}/>
+        <TodoItem key= {todo.text} text={todo.text} completed={todo.completed}/>
       ))}
       </TodoList>
       

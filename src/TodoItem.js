@@ -3,7 +3,7 @@ import './TodoItem.css'
 
 function TodoItem (props) {
     return (
-      <li className='ItemToDoLeft'>
+      <li className= 'ItemToDoLeft'>
         <p>{props.text}</p>
         <div className='actionsContainerToDo'>
         <span><ion-icon name="checkmark-circle-outline" class=" actionIconsLeftCheck"></ion-icon></span>
@@ -13,6 +13,5 @@ function TodoItem (props) {
       
     );
   }
-
 
   export  {TodoItem}; 
