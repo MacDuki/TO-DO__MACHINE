@@ -1,0 +1,20 @@
+.listToDoLeftPending {
+    display: flex;
+    flex-direction: column;
+    max-width: 15rem;
+    max-height: 40rem;
+    overflow-y: scroll;
+}
+
+.listToDoLeftPending::-webkit-scrollbar {
+    width: .5rem;
+}
+
+.listToDoLeftPending::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+.listToDoLeftPending::-webkit-scrollbar-thumb {
+    background: #000000; /* Color del pulgar de la barra de desplazamiento */
+  }
+
