@@ -1,8 +1,10 @@
-.ItemToDoLeft {
+.ItemToDoLeftPending {
   list-style-type: none;
   display: flex;
   flex-direction: column;
   border: .1rem solid black;
+  opacity: 1;
+  transition: opacity 1s ease ;
 }
 
 .actionsContainerToDo {
