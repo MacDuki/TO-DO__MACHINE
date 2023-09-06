@@ -1,17 +1,21 @@
 import React from 'react';
+import {MdOutlineTaskAlt} from 'react-icons/md'
+import {AiOutlineReload} from 'react-icons/ai'
+import {BsTrash} from 'react-icons/bs'
 
 function TodoItemRemoved (props) {
-  const itemClassName = props.completed ? 'ItemToDoLeftCompleted' : 'ItemToDoLeft';
+  const itemClassName = props.removed ? 'ItemToDoLeftRemoved' : 'ItemToDoLeft';
     return (
       <li className= {itemClassName}>
         <p>{props.text}</p>
         <div className='actionsContainerToDo'>
-        <span onClick={props.handleClickEliminiateChild}><ion-icon name="trash-outline" class=" actionIconsLeftClose"></ion-icon></span>
-        <span onClick={props.handleClickCloseChild}><ion-icon name="reload-circle-outline" class=" actionIconsLeftCheck"></ion-icon></span>        
+        <span onClick={props.handleClickCheck}><MdOutlineTaskAlt className=" actionIconsLeftClose"/></span>
+        <span onClick={props.handleClickEliminate}><BsTrash className=" actionIconsLeftClose"/></span>
+        <span onClick={props.handleClickDiscarded}><AiOutlineReload className=" actionIconsLeftCheck"/></span>        
         </div>
       </li>
       
     );
   }
-
+  
   export {TodoItemRemoved}; 

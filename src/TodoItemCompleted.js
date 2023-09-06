@@ -7,8 +7,8 @@ function TodoItemCompleted (props) {
       <li className= {itemClassName}>
         <p>{props.text}</p>
         <div className='actionsContainerToDo'>
-        <span onClick={props.handleClickCloseChild}><ion-icon name="reload-circle-outline" class=" actionIconsLeftCheck"></ion-icon></span>        
-        <span onClick={props.handleClickEliminiateChild}><ion-icon name="close-circle-outline" class=" actionIconsLeftClose"></ion-icon></span>
+        <span onClick={props.handleClickClose}><ion-icon name="reload-circle-outline" class=" actionIconsLeftCheck"></ion-icon></span>        
+        <span onClick={props.handleClickRemoved}><ion-icon name="close-circle-outline" class=" actionIconsLeftClose"></ion-icon></span>
         </div>
       </li>
       

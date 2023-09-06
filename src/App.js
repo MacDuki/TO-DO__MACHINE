@@ -15,22 +15,21 @@ const defaultTodos = [
 {text: "Comprar Pan", completed: false, removed: false},
 {text: "Comprar Agua", completed: false, removed: false},
 {text: "Comprar Dulce de leche", completed: false, removed: false},
-{text: "Comprar Frutillas", completed: true, removed: false},
-{text: "Comprar Anana", completed: false, removed: true},
+{text: "Comprar Frutillas", completed: false, removed: false},
+{text: "Comprar Anana", completed: false, removed: false},
 ];
 
 
 function App() {
   const [todos, setTodos] = React.useState(defaultTodos);
-  const completedTodos = todos.filter(todo => !!todo.completed).length ;
-  const totalTodos = todos.filter(todo=> !todo.removed).length;
   
   // Lógica para check y close TO-DO
-
-  const allPendingTodos = defaultTodos.filter(todo => !todo.completed && !todo.removed);
-  const allCompletedTodos = defaultTodos.filter(todo => todo.completed && !todo.removed);
-  const allRemovedTodos = defaultTodos.filter(todo => todo.removed);
-  const handleClickCheckInParent = (text) => {
+  const totalTodos = todos.filter(todo=> !todo.removed).length;
+  const totalCompletedTodos = todos.filter(todo => !!todo.completed).length ;
+  const allPendingTodos = todos.filter(todo => !todo.completed && !todo.removed);
+  const allCompletedTodos = todos.filter(todo => todo.completed && !todo.removed);
+  const allRemovedTodos = todos.filter(todo => todo.removed);
+  const handleClickCheck = (text) => {
     const updateTodos = [...todos];
     const todoIndex = updateTodos.findIndex (
       (todo) => todo.text == text
@@ -40,7 +39,7 @@ function App() {
     setTodos(updateTodos);
   };
 
-  const handleClickDiscardedInParent = (text) => {
+  const handleClickDiscarded = (text) => {
     const updateTodos = [...todos];
     const todoIndex = updateTodos.findIndex (
       (todo) => todo.text == text
@@ -50,8 +49,7 @@ function App() {
     setTodos(updateTodos);
   };
 
-  const handleClickEliminateInParent = (text) => {
-    console.log('Escucho evento eliminar')
+  const handleClickRemoved = (text) => {
     const updateTodos = [...todos];
     const todoIndex = updateTodos.findIndex (
       (todo) => todo.text == text
@@ -61,45 +59,55 @@ function App() {
     setTodos(updateTodos);
   };
 
+  const handleClickEliminate = (text) => {
+    const updatedTodos = todos.filter((todo) => todo.text !== text);
+    setTodos(updatedTodos);
+  };
+
   return (
     <section className="App">
       <div className="App-header">
       <TodoCounter 
-      completed={completedTodos} 
+      completed={totalCompletedTodos} 
       total={totalTodos}
       /> 
       {/* <TodoSearch/> */}
       <CreateTodoButton/>
       <TodoListPending>
       {allPendingTodos.map(todo => (
-       <TodoItemPending 
+       <TodoItemPending
+          todos = {todos} 
           key= {todo.text} 
           text={todo.text} 
           completed={todo.completed}
-          handleClickCheckChild={ () => handleClickCheckInParent(todo.text)}
-          handleClickCloseChild={ () => handleClickDiscardedInParent(todo.text)}
+          handleClickCheck={ () => handleClickCheck(todo.text)}
+          handleClickRemoved={ () => handleClickRemoved(todo.text)}
           /> ))}   
       </TodoListPending>
       <TodoListCompleted>
         {allCompletedTodos.map(todo => (
           <TodoItemCompleted
+          todos = {todos} 
           removed = {todo.removed}
           key= {todo.text} 
           text={todo.text} 
           completed={todo.completed}
-          handleClickEliminiateChild={ () => handleClickEliminateInParent(todo.text)}
-          handleClickCloseChild={ () => handleClickDiscardedInParent(todo.text)}
+          handleClickRemoved={ () => handleClickRemoved(todo.text)}
+          handleClickClose={ () => handleClickDiscarded(todo.text)}
           />
         ))}
       </TodoListCompleted>
       <TodoListRemoved>
       {allRemovedTodos.map(todo => (
-       <TodoItemPending 
+       <TodoItemRemoved 
+          todos = {todos} 
           key= {todo.text} 
           text={todo.text} 
+          removed={todo.removed}
           completed={todo.completed}
-          handleClickCheckChild={ () => handleClickCheckInParent(todo.text)}
-          handleClickCloseChild={ () => handleClickDiscardedInParent(todo.text)}
+          handleClickCheck={ () => handleClickCheck(todo.text)}
+          handleClickDiscarded={ () => handleClickDiscarded(todo.text)}
+          handleClickEliminate={ () => handleClickEliminate(todo.text)}
           /> ))}   
       </TodoListRemoved>
       
