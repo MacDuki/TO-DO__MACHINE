@@ -1,10 +1,7 @@
-import './TodoListCompleted.css'
+import "./TodoListCompleted.css";
 
-function TodoListCompleted ({children}) {
-    return (
-    <ul className='listToDoLeftCompleted'>
-        {children}   
-    </ul>)
-};
+function TodoListCompleted({ children }) {
+	return <ul className="listToDoLeftCompleted">{children}</ul>;
+}
 
-export  {TodoListCompleted};
+export { TodoListCompleted };

@@ -1,8 +1,5 @@
-
-function CreateTodoButton () {
-    return (
-        <button>Crear nueva tarea + </button>
-    );
+function CreateTodoButton() {
+	return <button>Crear nueva tarea + </button>;
 }
 
-export {CreateTodoButton};
+export { CreateTodoButton };

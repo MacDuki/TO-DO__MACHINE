@@ -1,10 +1,7 @@
-import './TodoListPending.css';
+import "./TodoListPending.css";
 
-function TodoListPending ({children}) {
-    return (
-    <ul className='listToDoLeftPending'>
-        {children}   
-    </ul>)
-};
+function TodoListPending({ children }) {
+	return <ul className="listToDoLeftPending">{children}</ul>;
+}
 
 export default TodoListPending;

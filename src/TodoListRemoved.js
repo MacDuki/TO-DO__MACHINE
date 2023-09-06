@@ -1,8 +1,5 @@
-function TodoListRemoved ({children}) {
-    return (
-    <ul className='listToDoLeftRemoved'>
-        {children}   
-    </ul>)
-};
+function TodoListRemoved({ children }) {
+	return <ul className="listToDoLeftRemoved">{children}</ul>;
+}
 
-export  {TodoListRemoved};
+export { TodoListRemoved };
