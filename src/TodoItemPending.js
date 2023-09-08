@@ -7,13 +7,13 @@ function TodoItemPending(props) {
 		<li className={itemClassName}>
 			<p>{props.text}</p>
 			<div className="actionsContainerToDo">
-				<span onClick={props.handleClickCheck}>
+				<span title="Complete" onClick={props.handleClickCheck}>
 					<ion-icon
 						name="checkmark-circle-outline"
 						class=" actionIconsLeftCheck"
 					/>
 				</span>
-				<span onClick={props.handleClickRemoved}>
+				<span title="Discard" onClick={props.handleClickRemoved}>
 					<ion-icon name="close-circle-outline" class=" actionIconsLeftClose" />
 				</span>
 			</div>

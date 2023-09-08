@@ -1,7 +1,8 @@
 import React from "react";
-import { MdOutlineTaskAlt } from "react-icons/md";
 import { AiOutlineReload } from "react-icons/ai";
 import { BsTrash } from "react-icons/bs";
+import { MdOutlineTaskAlt } from "react-icons/md";
+import "./TodoItemRemoved.css";
 
 function TodoItemRemoved(props) {
 	const itemClassName = props.removed ? "ItemToDoLeftRemoved" : "ItemToDoLeft";
@@ -9,14 +10,14 @@ function TodoItemRemoved(props) {
 		<li className={itemClassName}>
 			<p>{props.text}</p>
 			<div className="actionsContainerToDo">
-				<span onClick={props.handleClickCheck}>
+				<span title="To completed" onClick={props.handleClickCheck}>
 					<MdOutlineTaskAlt className=" actionIconsLeftClose" />
 				</span>
-				<span onClick={props.handleClickEliminate}>
-					<BsTrash className=" actionIconsLeftClose" />
-				</span>
-				<span onClick={props.handleClickDiscarded}>
+				<span title="Restart" onClick={props.handleClickDiscarded}>
 					<AiOutlineReload className=" actionIconsLeftCheck" />
+				</span>
+				<span title="Eliminate" onClick={props.handleClickEliminate}>
+					<BsTrash title="Eliminate" className=" actionIconsLeftClose" />
 				</span>
 			</div>
 		</li>

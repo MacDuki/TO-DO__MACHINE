@@ -10,11 +10,17 @@ import TodoListPending from "./TodoListPending";
 import { TodoListRemoved } from "./TodoListRemoved";
 
 const defaultTodos = [
-	{ text: "Comprar Pan", completed: false, removed: false },
-	{ text: "Comprar Agua", completed: false, removed: false },
-	{ text: "Comprar Dulce de leche", completed: false, removed: false },
-	{ text: "Comprar Frutillas", completed: false, removed: false },
-	{ text: "Comprar Anana", completed: false, removed: false },
+	{ text: "Item 0", completed: false, removed: false },
+	{ text: "Item 1", completed: false, removed: false },
+	{ text: "Item 3", completed: false, removed: false },
+	{ text: "Item 4", completed: false, removed: false },
+	{ text: "Item 5", completed: false, removed: false },
+	{ text: "Item 6", completed: false, removed: false },
+	{ text: "Item 7", completed: false, removed: false },
+	{ text: "Item 8", completed: false, removed: false },
+	{ text: "Item 9", completed: false, removed: false },
+	{ text: "Item 10", completed: false, removed: false },
+	{ text: "Item 11", completed: false, removed: false },
 ];
 
 function App() {
