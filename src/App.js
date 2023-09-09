@@ -5,22 +5,22 @@ import TodoCounter from "./TodoCounter";
 import { TodoItemCompleted } from "./TodoItemCompleted";
 import { TodoItemPending } from "./TodoItemPending";
 import { TodoItemRemoved } from "./TodoItemRemoved";
+import TodoList from "./TodoList";
 import { TodoListCompleted } from "./TodoListCompleted";
-import TodoListPending from "./TodoListPending";
 import { TodoListRemoved } from "./TodoListRemoved";
 
 const defaultTodos = [
-	{ text: "Item 0", completed: false, removed: false },
-	{ text: "Item 1", completed: false, removed: false },
-	{ text: "Item 3", completed: false, removed: false },
-	{ text: "Item 4", completed: false, removed: false },
-	{ text: "Item 5", completed: false, removed: false },
-	{ text: "Item 6", completed: false, removed: false },
-	{ text: "Item 7", completed: false, removed: false },
-	{ text: "Item 8", completed: false, removed: false },
-	{ text: "Item 9", completed: false, removed: false },
-	{ text: "Item 10", completed: false, removed: false },
-	{ text: "Item 11", completed: false, removed: false },
+	{ text: "Item 0", completed: false, removed: false, section: "pending" },
+	{ text: "Item 1", completed: true, removed: false, section: "completed" },
+	{ text: "Item 3", completed: false, removed: false, section: "pending" },
+	{ text: "Item 4", completed: false, removed: false, section: "pending" },
+	{ text: "Item 5", completed: false, removed: false, section: "pending" },
+	{ text: "Item 6", completed: false, removed: false, section: "pending" },
+	{ text: "Item 7", completed: false, removed: false, section: "pending" },
+	{ text: "Item 8", completed: false, removed: false, section: "pending" },
+	{ text: "Item 9", completed: false, removed: false, section: "pending" },
+	{ text: "Item 10", completed: false, removed: false, section: "pending" },
+	{ text: "Item 11", completed: false, removed: true, section: "removed" },
 ];
 
 function App() {
@@ -41,6 +41,7 @@ function App() {
 		const todoIndex = updateTodos.findIndex((todo) => todo.text === text);
 		updateTodos[todoIndex].completed = true;
 		updateTodos[todoIndex].removed = false;
+		updateTodos[todoIndex].section = "completed";
 		setTodos(updateTodos);
 	};
 
@@ -49,6 +50,7 @@ function App() {
 		const todoIndex = updateTodos.findIndex((todo) => todo.text === text);
 		updateTodos[todoIndex].completed = false;
 		updateTodos[todoIndex].removed = false;
+		updateTodos[todoIndex].section = "pending";
 		setTodos(updateTodos);
 	};
 
@@ -56,7 +58,7 @@ function App() {
 		const updateTodos = [...todos];
 		const todoIndex = updateTodos.findIndex((todo) => todo.text === text);
 		updateTodos[todoIndex].completed = false;
-		updateTodos[todoIndex].removed = true;
+		updateTodos[todoIndex].section = "removed";
 		setTodos(updateTodos);
 	};
 
@@ -65,24 +67,44 @@ function App() {
 		setTodos(updatedTodos);
 	};
 
+	const sectionArray = () => {
+		const updateTodos = [...todos];
+		const pending = updateTodos
+			.filter((todo) => todo.section === "pending")
+			.map((todo) => Object.keys(todo));
+		const removed = updateTodos
+			.filter((todo) => todo.section === "removed")
+			.map((todo) => Object.keys(todo));
+		const complete = updateTodos
+			.filter((todo) => todo.section === "completed")
+			.map((todo) => Object.keys(todo));
+
+		return { pending, removed, complete };
+	};
+
+	const [sect, setSection] = React.useState(1);
+
+	const section = sectionArray();
 	return (
 		<section className="App">
 			<div className="App-header">
 				<TodoCounter completed={totalCompletedTodos} total={totalTodos} />
 				{/* <TodoSearch/> */}
-				<CreateTodoButton />
-				<TodoListPending>
-					{allPendingTodos.map((todo) => (
+				<CreateTodoButton sectionFunction={() => section()} />
+				<TodoList>
+					{section.map((todo) => (
 						<TodoItemPending
 							todos={todos}
 							key={todo.text}
 							text={todo.text}
 							completed={todo.completed}
+							removed={todo.removed}
+							section={todo.section}
 							handleClickCheck={() => handleClickCheck(todo.text)}
 							handleClickRemoved={() => handleClickRemoved(todo.text)}
 						/>
 					))}
-				</TodoListPending>
+				</TodoList>
 				<TodoListCompleted>
 					{allCompletedTodos.map((todo) => (
 						<TodoItemCompleted
