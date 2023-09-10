@@ -1,4 +1,4 @@
-import { AiOutlinePlusCircle } from "react-icons/ai";
+import { AiOutlineCloseCircle, AiOutlinePlusCircle } from "react-icons/ai";
 import { BsArrowLeftCircle, BsArrowRightCircle } from "react-icons/bs";
 import "./TodoLeftHeader.css";
 function TodoLeftHeader({
@@ -7,9 +7,12 @@ function TodoLeftHeader({
 	sectionFunctionLeft,
 	total,
 	completed,
-	handleSubmit,
+	createTodo,
 	newTodoText,
 	setNewTodoText,
+	handlePanelVisibility,
+	showPanel,
+	handlePanelClose,
 }) {
 	let tittle = "";
 	if (section === "pending") {
@@ -17,7 +20,7 @@ function TodoLeftHeader({
 	} else if (section === "completed") {
 		tittle = "Tasks Completed";
 	} else if (section === "removed") {
-		tittle = "Discarder & Removed Tasks";
+		tittle = "Removed Tasks";
 	}
 	return (
 		<>
@@ -37,17 +40,31 @@ function TodoLeftHeader({
 					<h3 className="tasks-counter">
 						{completed}/{total}
 					</h3>
-					<AiOutlinePlusCircle onClick={handleSubmit} className="plus-icon" />
+					<AiOutlinePlusCircle
+						onClick={handlePanelVisibility}
+						className="plus-icon"
+					/>
 				</div>
-				<form onSubmit={handleSubmit}>
+				<div className={showPanel}>
+					<AiOutlineCloseCircle
+						onClick={handlePanelClose}
+						className="plus-icon"
+					/>
 					<input
 						type="text"
 						placeholder="Nueva tarea..."
-						value={newTodoText}
 						onChange={(e) => setNewTodoText(e.target.value)}
+						value={newTodoText}
 					/>
-					<button type="submit">Agregar</button>
-				</form>
+					<button
+						onClick={() => {
+							createTodo();
+							setTimeout(handlePanelClose, 100);
+						}}
+					>
+						Agregar
+					</button>
+				</div>
 			</div>
 		</>
 	);

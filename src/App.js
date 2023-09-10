@@ -11,12 +11,6 @@ const defaultTodos = [
 	{ text: "Item 3", completed: false, removed: false, section: "pending" },
 	{ text: "Item 4", completed: false, removed: false, section: "pending" },
 	{ text: "Item 5", completed: false, removed: false, section: "pending" },
-	{ text: "Item 6", completed: false, removed: false, section: "pending" },
-	{ text: "Item 7", completed: false, removed: false, section: "pending" },
-	{ text: "Item 8", completed: false, removed: false, section: "pending" },
-	{ text: "Item 9", completed: false, removed: false, section: "pending" },
-	{ text: "Item 10", completed: false, removed: false, section: "pending" },
-	{ text: "Item 11", completed: false, removed: true, section: "removed" },
 ];
 
 function App() {
@@ -89,11 +83,9 @@ function App() {
 			setSection("completed");
 		}
 	};
-	const stateBar = "Soy el estado ";
 	// Logica para crear Todos simples
 	const [newTodoText, setNewTodoText] = React.useState("");
-	const handleCreateTodo = (e) => {
-		e.preventDefault();
+	const createTodo = () => {
 		const updatedTodos = [...todos];
 		const nuevoTodo = {
 			text: newTodoText,
@@ -102,19 +94,30 @@ function App() {
 		};
 		updatedTodos.push(nuevoTodo);
 		setTodos(updatedTodos);
+		setNewTodoText("");
 	};
 
+	const [showPanel, setShowPanel] = React.useState("newtodo-panel-hidden");
+	const handleOpenPanel = () => {
+		setShowPanel("newtodo-panel");
+	};
+	const handleClosePanel = () => {
+		setShowPanel("newtodo-panel-hidden");
+	};
 	return (
 		<section className="App">
 			<div className="App-header">
 				{/* <TodoSearch/> */}
 				<TodoLeftHeader
+					handlePanelClose={() => handleClosePanel()}
+					showPanel={showPanel}
+					handlePanelVisibility={() => handleOpenPanel()}
 					section={section}
 					sectionFunctionRight={() => sectionFunctionRight()}
 					sectionFunctionLeft={() => sectionFunctionLeft()}
 					completed={totalCompletedTodos}
 					total={totalTodos}
-					handleSubmit={() => handleCreateTodo()}
+					createTodo={() => createTodo()}
 					newTodoText={newTodoText}
 					setNewTodoText={setNewTodoText}
 				/>
