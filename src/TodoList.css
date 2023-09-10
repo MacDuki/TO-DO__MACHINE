@@ -1,4 +1,6 @@
-.listToDoLeftRemoved {
+.listToDoLeft {
+    padding-left: 0;
+    margin: 0 1rem;
     display: flex;
     flex-direction: column;
     max-width: 15rem;
@@ -6,14 +8,15 @@
     overflow-y: scroll;
 }
 
-.listToDoLeftPending::-webkit-scrollbar {
+.listToDoLeft::-webkit-scrollbar {
     width: .5rem;
 }
 
-.listToDoLeftPending::-webkit-scrollbar-track {
+.listToDoLeft::-webkit-scrollbar-track {
     background: transparent;
   }
 
-.listToDoLeftPending::-webkit-scrollbar-thumb {
+.listToDoLeft::-webkit-scrollbar-thumb {
     background: #000000; /* Color del pulgar de la barra de desplazamiento */
   }
+

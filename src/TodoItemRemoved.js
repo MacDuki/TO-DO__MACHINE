@@ -11,7 +11,7 @@ function TodoItemRemoved(props) {
 			<p>{props.text}</p>
 			<div className="actionsContainerToDo">
 				<span title="To completed" onClick={props.handleClickCheck}>
-					<MdOutlineTaskAlt className=" actionIconsLeftClose" />
+					<MdOutlineTaskAlt className=" actionIconsLeftCompleted" />
 				</span>
 				<span title="Restart" onClick={props.handleClickDiscarded}>
 					<AiOutlineReload className=" actionIconsLeftCheck" />

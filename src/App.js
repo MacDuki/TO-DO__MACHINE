@@ -1,13 +1,9 @@
 import React from "react";
-import "./App.css";
-import { CreateTodoButton } from "./CreateTodoButton";
-import TodoCounter from "./TodoCounter";
 import { TodoItemCompleted } from "./TodoItemCompleted";
 import { TodoItemPending } from "./TodoItemPending";
 import { TodoItemRemoved } from "./TodoItemRemoved";
+import { TodoLeftHeader } from "./TodoLeftHeader";
 import TodoList from "./TodoList";
-import { TodoListCompleted } from "./TodoListCompleted";
-import { TodoListRemoved } from "./TodoListRemoved";
 
 const defaultTodos = [
 	{ text: "Item 0", completed: false, removed: false, section: "pending" },
@@ -29,6 +25,7 @@ function App() {
 	// Lógica para check y close TO-DO
 	const totalTodos = todos.filter((todo) => !todo.removed).length;
 	const totalCompletedTodos = todos.filter((todo) => !!todo.completed).length;
+
 	const allPendingTodos = todos.filter(
 		(todo) => !todo.completed && !todo.removed,
 	);
@@ -36,6 +33,7 @@ function App() {
 		(todo) => todo.completed && !todo.removed,
 	);
 	const allRemovedTodos = todos.filter((todo) => todo.removed);
+
 	const handleClickCheck = (text) => {
 		const updateTodos = [...todos];
 		const todoIndex = updateTodos.findIndex((todo) => todo.text === text);
@@ -58,6 +56,7 @@ function App() {
 		const updateTodos = [...todos];
 		const todoIndex = updateTodos.findIndex((todo) => todo.text === text);
 		updateTodos[todoIndex].completed = false;
+		updateTodos[todoIndex].removed = true;
 		updateTodos[todoIndex].section = "removed";
 		setTodos(updateTodos);
 	};
@@ -67,71 +66,102 @@ function App() {
 		setTodos(updatedTodos);
 	};
 
-	const sectionArray = () => {
-		const updateTodos = [...todos];
-		const pending = updateTodos
-			.filter((todo) => todo.section === "pending")
-			.map((todo) => Object.keys(todo));
-		const removed = updateTodos
-			.filter((todo) => todo.section === "removed")
-			.map((todo) => Object.keys(todo));
-		const complete = updateTodos
-			.filter((todo) => todo.section === "completed")
-			.map((todo) => Object.keys(todo));
+	// logica para secciones
 
-		return { pending, removed, complete };
+	const [section, setSection] = React.useState("pending");
+
+	const sectionFunctionRight = () => {
+		if (section === "pending") {
+			setSection("completed");
+		} else if (section === "completed") {
+			setSection("removed");
+		} else if (section === "removed") {
+			setSection("pending");
+		}
 	};
 
-	const [sect, setSection] = React.useState(1);
+	const sectionFunctionLeft = () => {
+		if (section === "pending") {
+			setSection("removed");
+		} else if (section === "completed") {
+			setSection("pending");
+		} else if (section === "removed") {
+			setSection("completed");
+		}
+	};
+	const stateBar = "Soy el estado ";
+	// Logica para crear Todos simples
+	const [newTodoText, setNewTodoText] = React.useState("");
+	const handleCreateTodo = (e) => {
+		e.preventDefault();
+		const updatedTodos = [...todos];
+		const nuevoTodo = {
+			text: newTodoText,
+			completed: false,
+			removed: false,
+		};
+		updatedTodos.push(nuevoTodo);
+		setTodos(updatedTodos);
+	};
 
-	const section = sectionArray();
 	return (
 		<section className="App">
 			<div className="App-header">
-				<TodoCounter completed={totalCompletedTodos} total={totalTodos} />
 				{/* <TodoSearch/> */}
-				<CreateTodoButton sectionFunction={() => section()} />
-				<TodoList>
-					{section.map((todo) => (
-						<TodoItemPending
-							todos={todos}
-							key={todo.text}
-							text={todo.text}
-							completed={todo.completed}
-							removed={todo.removed}
-							section={todo.section}
-							handleClickCheck={() => handleClickCheck(todo.text)}
-							handleClickRemoved={() => handleClickRemoved(todo.text)}
-						/>
-					))}
-				</TodoList>
-				<TodoListCompleted>
-					{allCompletedTodos.map((todo) => (
-						<TodoItemCompleted
-							todos={todos}
-							removed={todo.removed}
-							key={todo.text}
-							text={todo.text}
-							completed={todo.completed}
-							handleClickRemoved={() => handleClickRemoved(todo.text)}
-							handleClickClose={() => handleClickDiscarded(todo.text)}
-						/>
-					))}
-				</TodoListCompleted>
-				<TodoListRemoved>
-					{allRemovedTodos.map((todo) => (
-						<TodoItemRemoved
-							todos={todos}
-							key={todo.text}
-							text={todo.text}
-							removed={todo.removed}
-							completed={todo.completed}
-							handleClickCheck={() => handleClickCheck(todo.text)}
-							handleClickDiscarded={() => handleClickDiscarded(todo.text)}
-							handleClickEliminate={() => handleClickEliminate(todo.text)}
-						/>
-					))}
-				</TodoListRemoved>
+				<TodoLeftHeader
+					section={section}
+					sectionFunctionRight={() => sectionFunctionRight()}
+					sectionFunctionLeft={() => sectionFunctionLeft()}
+					completed={totalCompletedTodos}
+					total={totalTodos}
+					handleSubmit={() => handleCreateTodo()}
+					newTodoText={newTodoText}
+					setNewTodoText={setNewTodoText}
+				/>
+				{section === "pending" ? (
+					<TodoList>
+						{allPendingTodos.map((todo) => (
+							<TodoItemPending
+								todos={todos}
+								removed={todo.removed}
+								key={todo.text}
+								text={todo.text}
+								completed={todo.completed}
+								handleClickCheck={() => handleClickCheck(todo.text)}
+								handleClickRemoved={() => handleClickRemoved(todo.text)}
+							/>
+						))}
+					</TodoList>
+				) : section === "completed" ? (
+					<TodoList>
+						{allCompletedTodos.map((todo) => (
+							<TodoItemCompleted
+								todos={todos}
+								removed={todo.removed}
+								key={todo.text}
+								text={todo.text}
+								completed={todo.completed}
+								handleClickRemoved={() => handleClickRemoved(todo.text)}
+								handleClickClose={() => handleClickDiscarded(todo.text)}
+							/>
+						))}
+					</TodoList>
+				) : (
+					<TodoList>
+						{allRemovedTodos.map((todo) => (
+							<TodoItemRemoved
+								todos={todos}
+								key={todo.text}
+								text={todo.text}
+								removed={todo.removed}
+								completed={todo.completed}
+								handleClickCheck={() => handleClickCheck(todo.text)}
+								handleClickDiscarded={() => handleClickDiscarded(todo.text)}
+								handleClickEliminate={() => handleClickEliminate(todo.text)}
+							/>
+						))}
+					</TodoList>
+				)}
 			</div>
 		</section>
 	);
