@@ -1,0 +1,21 @@
+
+.newtodo-panel {
+    display: flex;
+    flex-direction: column;
+    width: 15rem;
+    height: 40rem;
+    position: absolute;
+    align-items:left;
+    background-color:  #eeee;
+    z-index: 900;
+}
+.newtodo-panel input {
+    width: 14rem;
+    height: 2rem;
+}
+.newtodo-panel button {
+    width: 15rem;
+    height: 3rem;
+    padding: 0;
+    cursor: pointer;
+}

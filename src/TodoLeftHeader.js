@@ -1,4 +1,4 @@
-import { AiOutlineCloseCircle, AiOutlinePlusCircle } from "react-icons/ai";
+import { AiOutlinePlusCircle } from "react-icons/ai";
 import { BsArrowLeftCircle, BsArrowRightCircle } from "react-icons/bs";
 import "./TodoLeftHeader.css";
 function TodoLeftHeader({
@@ -7,12 +7,7 @@ function TodoLeftHeader({
 	sectionFunctionLeft,
 	total,
 	completed,
-	createTodo,
-	newTodoText,
-	setNewTodoText,
 	handlePanelVisibility,
-	showPanel,
-	handlePanelClose,
 }) {
 	let tittle = "";
 	if (section === "pending") {
@@ -44,26 +39,6 @@ function TodoLeftHeader({
 						onClick={handlePanelVisibility}
 						className="plus-icon"
 					/>
-				</div>
-				<div className={showPanel}>
-					<AiOutlineCloseCircle
-						onClick={handlePanelClose}
-						className="plus-icon"
-					/>
-					<input
-						type="text"
-						placeholder="Nueva tarea..."
-						onChange={(e) => setNewTodoText(e.target.value)}
-						value={newTodoText}
-					/>
-					<button
-						onClick={() => {
-							createTodo();
-							setTimeout(handlePanelClose, 100);
-						}}
-					>
-						Agregar
-					</button>
 				</div>
 			</div>
 		</>

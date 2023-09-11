@@ -1,4 +1,5 @@
 import React from "react";
+import { CreateTodoPanelLeft } from "./CreateTodoPanelLeft";
 import { TodoItemCompleted } from "./TodoItemCompleted";
 import { TodoItemPending } from "./TodoItemPending";
 import { TodoItemRemoved } from "./TodoItemRemoved";
@@ -10,7 +11,7 @@ const defaultTodos = [
 	{ text: "Item 1", completed: true, removed: false, section: "completed" },
 	{ text: "Item 3", completed: false, removed: false, section: "pending" },
 	{ text: "Item 4", completed: false, removed: false, section: "pending" },
-	{ text: "Item 5", completed: false, removed: false, section: "pending" },
+	{ text: "Item 5", completed: false, removed: true, section: "pending" },
 ];
 
 function App() {
@@ -28,36 +29,29 @@ function App() {
 	);
 	const allRemovedTodos = todos.filter((todo) => todo.removed);
 
-	const handleClickCheck = (text) => {
+	const handleTodoActions = (text, action) => {
 		const updateTodos = [...todos];
 		const todoIndex = updateTodos.findIndex((todo) => todo.text === text);
-		updateTodos[todoIndex].completed = true;
-		updateTodos[todoIndex].removed = false;
-		updateTodos[todoIndex].section = "completed";
-		setTodos(updateTodos);
-	};
 
-	const handleClickDiscarded = (text) => {
-		const updateTodos = [...todos];
-		const todoIndex = updateTodos.findIndex((todo) => todo.text === text);
-		updateTodos[todoIndex].completed = false;
-		updateTodos[todoIndex].removed = false;
-		updateTodos[todoIndex].section = "pending";
-		setTodos(updateTodos);
-	};
+		if (action === "check") {
+			updateTodos[todoIndex].completed = true;
+			updateTodos[todoIndex].removed = false;
+			updateTodos[todoIndex].section = "completed";
+		} else if (action === "discarded") {
+			updateTodos[todoIndex].completed = false;
+			updateTodos[todoIndex].removed = false;
+			updateTodos[todoIndex].section = "pending";
+		} else if (action === "removed") {
+			updateTodos[todoIndex].completed = false;
+			updateTodos[todoIndex].removed = true;
+			updateTodos[todoIndex].section = "removed";
+		} else if (action === "eliminate") {
+			const updatedTodos = updateTodos.filter((todo) => todo.text !== text);
+			setTodos(updatedTodos);
+			return; // Return early to avoid setting state multiple times
+		}
 
-	const handleClickRemoved = (text) => {
-		const updateTodos = [...todos];
-		const todoIndex = updateTodos.findIndex((todo) => todo.text === text);
-		updateTodos[todoIndex].completed = false;
-		updateTodos[todoIndex].removed = true;
-		updateTodos[todoIndex].section = "removed";
 		setTodos(updateTodos);
-	};
-
-	const handleClickEliminate = (text) => {
-		const updatedTodos = todos.filter((todo) => todo.text !== text);
-		setTodos(updatedTodos);
 	};
 
 	// logica para secciones
@@ -97,31 +91,35 @@ function App() {
 		setNewTodoText("");
 	};
 
-	const [showPanel, setShowPanel] = React.useState("newtodo-panel-hidden");
-	const handleOpenPanel = () => {
-		setShowPanel("newtodo-panel");
-	};
-	const handleClosePanel = () => {
-		setShowPanel("newtodo-panel-hidden");
+	const [showPanel, setShowPanel] = React.useState("hidden");
+
+	const handlePanelVisibility = (action) => {
+		if (action === "open") {
+			setShowPanel("visible");
+		} else if (action === "close") {
+			setShowPanel("hidden");
+		}
 	};
 	return (
 		<section className="App">
 			<div className="App-header">
 				{/* <TodoSearch/> */}
 				<TodoLeftHeader
-					handlePanelClose={() => handleClosePanel()}
-					showPanel={showPanel}
-					handlePanelVisibility={() => handleOpenPanel()}
+					handlePanelVisibility={() => handlePanelVisibility("open")}
 					section={section}
 					sectionFunctionRight={() => sectionFunctionRight()}
 					sectionFunctionLeft={() => sectionFunctionLeft()}
 					completed={totalCompletedTodos}
 					total={totalTodos}
-					createTodo={() => createTodo()}
-					newTodoText={newTodoText}
-					setNewTodoText={setNewTodoText}
 				/>
-				{section === "pending" ? (
+				{showPanel === "visible" ? (
+					<CreateTodoPanelLeft
+						handlePanelVisibility={() => handlePanelVisibility("close")}
+						createTodo={() => createTodo()}
+						newTodoText={newTodoText}
+						setNewTodoText={setNewTodoText}
+					/>
+				) : section === "pending" ? (
 					<TodoList>
 						{allPendingTodos.map((todo) => (
 							<TodoItemPending
@@ -130,8 +128,10 @@ function App() {
 								key={todo.text}
 								text={todo.text}
 								completed={todo.completed}
-								handleClickCheck={() => handleClickCheck(todo.text)}
-								handleClickRemoved={() => handleClickRemoved(todo.text)}
+								handleClickCheck={() => handleTodoActions(todo.text, "check")}
+								handleClickRemoved={() =>
+									handleTodoActions(todo.text, "removed")
+								}
 							/>
 						))}
 					</TodoList>
@@ -144,12 +144,16 @@ function App() {
 								key={todo.text}
 								text={todo.text}
 								completed={todo.completed}
-								handleClickRemoved={() => handleClickRemoved(todo.text)}
-								handleClickClose={() => handleClickDiscarded(todo.text)}
+								handleClickRemoved={() =>
+									handleTodoActions(todo.text, "removed")
+								}
+								handleClickClose={() =>
+									handleTodoActions(todo.text, "discarded")
+								}
 							/>
 						))}
 					</TodoList>
-				) : (
+				) : section === "removed" ? (
 					<TodoList>
 						{allRemovedTodos.map((todo) => (
 							<TodoItemRemoved
@@ -158,13 +162,17 @@ function App() {
 								text={todo.text}
 								removed={todo.removed}
 								completed={todo.completed}
-								handleClickCheck={() => handleClickCheck(todo.text)}
-								handleClickDiscarded={() => handleClickDiscarded(todo.text)}
-								handleClickEliminate={() => handleClickEliminate(todo.text)}
+								handleClickCheck={() => handleTodoActions(todo.text, "check")}
+								handleClickDiscarded={() =>
+									handleTodoActions(todo.text, "discarded")
+								}
+								handleClickEliminate={() =>
+									handleTodoActions(todo.text, "eliminate")
+								}
 							/>
 						))}
 					</TodoList>
-				)}
+				) : null}
 			</div>
 		</section>
 	);
