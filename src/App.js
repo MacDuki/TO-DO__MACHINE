@@ -1,4 +1,5 @@
 import React from "react";
+import "./App.css";
 import { CreateTodoPanelLeft } from "./CreateTodoPanelLeft";
 import { TodoItemCompleted } from "./TodoItemCompleted";
 import { TodoItemPending } from "./TodoItemPending";
@@ -104,14 +105,16 @@ function App() {
 		<section className="App">
 			<div className="App-header">
 				{/* <TodoSearch/> */}
-				<TodoLeftHeader
-					handlePanelVisibility={() => handlePanelVisibility("open")}
-					section={section}
-					sectionFunctionRight={() => sectionFunctionRight()}
-					sectionFunctionLeft={() => sectionFunctionLeft()}
-					completed={totalCompletedTodos}
-					total={totalTodos}
-				/>
+				{showPanel === "hidden" ? (
+					<TodoLeftHeader
+						handlePanelVisibility={() => handlePanelVisibility("open")}
+						section={section}
+						sectionFunctionRight={() => sectionFunctionRight()}
+						sectionFunctionLeft={() => sectionFunctionLeft()}
+						completed={totalCompletedTodos}
+						total={totalTodos}
+					/>
+				) : null}
 				{showPanel === "visible" ? (
 					<CreateTodoPanelLeft
 						handlePanelVisibility={() => handlePanelVisibility("close")}

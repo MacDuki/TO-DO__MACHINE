@@ -1,10 +1,13 @@
+import { motion } from "framer-motion";
 import "./TodoItemPending.css";
 function TodoItemPending(props) {
-	const itemClassName = props.completed
-		? "ItemToDoLeftCompleted"
-		: "ItemToDoLeftPending";
 	return (
-		<li className={itemClassName}>
+		<motion.li
+			animate={{ x: 0, scale: 1 }}
+			initial={{ scale: 0.5, x: -100 }}
+			transition={{ type: "spring", bounce: 0.5 }}
+			className="ItemToDoLeftPending"
+		>
 			<p>{props.text}</p>
 			<div className="actionsContainerToDo">
 				<span title="Complete" onClick={props.handleClickCheck}>
@@ -17,7 +20,7 @@ function TodoItemPending(props) {
 					<ion-icon name="close-circle-outline" class=" actionIconsLeftClose" />
 				</span>
 			</div>
-		</li>
+		</motion.li>
 	);
 }
 

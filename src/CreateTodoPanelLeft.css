@@ -3,11 +3,10 @@
     display: flex;
     flex-direction: column;
     width: 15rem;
-    height: 40rem;
-    position: absolute;
-    align-items:left;
+    height: 10rem;
+    position: relative;
+    align-items:center;
     background-color:  #eeee;
-    z-index: 900;
 }
 .newtodo-panel input {
     width: 14rem;

@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import "./CreateTodoPanelLeft.css";
 
@@ -8,7 +9,12 @@ function CreateTodoPanelLeft({
 	setNewTodoText,
 }) {
 	return (
-		<div className="newtodo-panel">
+		<motion.div
+			animate={{ y: 45, x: 15, scale: 1 }}
+			initial={{ scale: 0, y: 45 }}
+			transition={{ type: "spring", bounce: 0.5 }}
+			className="newtodo-panel"
+		>
 			<AiOutlineCloseCircle
 				onClick={handlePanelVisibility}
 				className="plus-icon"
@@ -27,7 +33,7 @@ function CreateTodoPanelLeft({
 			>
 				Agregar
 			</button>
-		</div>
+		</motion.div>
 	);
 }
 

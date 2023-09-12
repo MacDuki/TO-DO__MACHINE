@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import React from "react";
 import { AiOutlineReload } from "react-icons/ai";
 import { BsTrash } from "react-icons/bs";
@@ -7,7 +8,12 @@ import "./TodoItemRemoved.css";
 function TodoItemRemoved(props) {
 	const itemClassName = props.removed ? "ItemToDoLeftRemoved" : "ItemToDoLeft";
 	return (
-		<li className={itemClassName}>
+		<motion.li
+			animate={{ x: 0, scale: 1 }}
+			initial={{ scale: 0.5, x: -100 }}
+			transition={{ type: "spring", bounce: 0.5 }}
+			className={itemClassName}
+		>
 			<p>{props.text}</p>
 			<div className="actionsContainerToDo">
 				<span title="To completed" onClick={props.handleClickCheck}>
@@ -20,7 +26,7 @@ function TodoItemRemoved(props) {
 					<BsTrash title="Eliminate" className=" actionIconsLeftClose" />
 				</span>
 			</div>
-		</li>
+		</motion.li>
 	);
 }
 

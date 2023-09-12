@@ -1,11 +1,14 @@
 .listToDoLeft {
-    padding-left: 0;
-    margin: 0 1rem;
-    display: flex;
+    display: inline-flex;
     flex-direction: column;
-    max-width: 15rem;
-    max-height: 40rem;
-    overflow-y: scroll;
+    width: 15rem;
+    height: 25rem;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    padding: 2rem;
+    padding-right: .5rem;
+    padding-left: .5rem;
+    margin: 1rem;
 }
 
 .listToDoLeft::-webkit-scrollbar {
