@@ -7,16 +7,30 @@ import { TodoItemRemoved } from "./TodoItemRemoved";
 import { TodoLeftHeader } from "./TodoLeftHeader";
 import TodoList from "./TodoList";
 
-const defaultTodos = [
+/*const defaultTodos = [
 	{ text: "Item 0", completed: false, removed: false, section: "pending" },
 	{ text: "Item 1", completed: true, removed: false, section: "completed" },
 	{ text: "Item 3", completed: false, removed: false, section: "pending" },
 	{ text: "Item 4", completed: false, removed: false, section: "pending" },
 	{ text: "Item 5", completed: false, removed: true, section: "pending" },
-];
+];*/
 
 function App() {
-	const [todos, setTodos] = React.useState(defaultTodos);
+	const localStorageTodos = localStorage.getItem("TODOS_V1");
+
+	let parsedTodos;
+
+	if (!localStorageTodos) {
+		localStorage.setItem("TODOS_V1", JSON.stringify([]));
+		parsedTodos = [];
+	} else {
+		parsedTodos = JSON.parse(localStorageTodos);
+	}
+	const [todos, setTodos] = React.useState(parsedTodos);
+	const saveLocalStorage = (updatedTodos) => {
+		localStorage.setItem("TODOS_V1", JSON.stringify(updatedTodos));
+		setTodos(updatedTodos);
+	};
 
 	// Lógica para check y close TO-DO
 	const totalTodos = todos.filter((todo) => !todo.removed).length;
@@ -48,11 +62,11 @@ function App() {
 			updateTodos[todoIndex].section = "removed";
 		} else if (action === "eliminate") {
 			const updatedTodos = updateTodos.filter((todo) => todo.text !== text);
-			setTodos(updatedTodos);
+			saveLocalStorage(updatedTodos);
 			return; // Return early to avoid setting state multiple times
 		}
 
-		setTodos(updateTodos);
+		saveLocalStorage(updateTodos);
 	};
 
 	// logica para secciones
