@@ -14,6 +14,9 @@ function AppUi({
 	setNewTodoText,
 	section,
 	sectionComponents,
+	todos,
+	loading,
+	error,
 }) {
 	return (
 		<section className="App">
@@ -37,7 +40,14 @@ function AppUi({
 						setNewTodoText={setNewTodoText}
 					/>
 				) : (
-					<TodoList>{sectionComponents[section]()}</TodoList>
+					<TodoList>
+						{loading ? <p>Cargando ...</p> : null}
+						{error ? <p>Hay un error fatal</p> : null}
+						{!loading && todos.length < 1 ? <p>Crea tu primer Todo</p> : null}
+						{!loading && todos.length >= 1
+							? sectionComponents[section]()
+							: null}
+					</TodoList>
 				)}
 			</div>
 		</section>

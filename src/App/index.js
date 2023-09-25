@@ -6,7 +6,12 @@ import "./App.css";
 import { AppUi } from "./AppUi";
 import { useLocalStorage } from "./useLocalStorage";
 function App() {
-	const [todos, saveLocalStorage] = useLocalStorage("TODOS-V1", []);
+	const {
+		item: todos,
+		saveLocalStorage,
+		error,
+		loading,
+	} = useLocalStorage("TODOS-V1", []);
 	// Lógica para check y close TO-DO
 	const totalTodos = todos.filter((todo) => !todo.removed).length;
 	const totalCompletedTodos = todos.filter((todo) => !!todo.completed).length;
@@ -43,24 +48,26 @@ function App() {
 	};
 	// logica para secciones
 	const [section, setSection] = React.useState("pending");
-	const sectionFunctionRight = () => {
-		setSection((prevSection) =>
-			prevSection === "removed"
-				? "pending"
-				: prevSection === "pending"
-				? "completed"
-				: "removed",
-		);
+
+	const sectionSetFunction = {
+		right: () =>
+			setSection((prevSection) =>
+				prevSection === "removed"
+					? "pending"
+					: prevSection === "pending"
+					? "completed"
+					: "removed",
+			),
+		left: () =>
+			setSection((prevSection) =>
+				prevSection === "completed"
+					? "pending"
+					: prevSection === "removed"
+					? "completed"
+					: "removed",
+			),
 	};
-	const sectionFunctionLeft = () => {
-		setSection((prevSection) =>
-			prevSection === "completed"
-				? "pending"
-				: prevSection === "removed"
-				? "completed"
-				: "removed",
-		);
-	};
+
 	const sectionComponents = {
 		pending: () =>
 			allPendingTodos.map((todo) => (
@@ -125,8 +132,8 @@ function App() {
 	return (
 		<AppUi
 			handlePanelVisibility={handlePanelVisibility}
-			sectionFunctionLeft={sectionFunctionLeft}
-			sectionFunctionRight={sectionFunctionRight}
+			sectionFunctionLeft={sectionSetFunction.left}
+			sectionFunctionRight={sectionSetFunction.right}
 			totalCompletedTodos={totalCompletedTodos}
 			totalTodos={totalTodos}
 			showPanel={showPanel}
@@ -135,6 +142,9 @@ function App() {
 			setNewTodoText={setNewTodoText}
 			section={section}
 			sectionComponents={sectionComponents}
+			todos={todos}
+			error={error}
+			loading={loading}
 		/>
 	);
 }
