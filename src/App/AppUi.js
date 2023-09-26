@@ -1,4 +1,5 @@
 import { CreateTodoPanelLeft } from "../CreateTodoPanelLeft/index";
+import { TodoContext } from "../TodoContext";
 import { TodoLeftHeader } from "../TodoLeftHeader/index";
 import TodoList from "../TodoList/index";
 
@@ -13,10 +14,6 @@ function AppUi({
 	newTodoText,
 	setNewTodoText,
 	section,
-	sectionComponents,
-	todos,
-	loading,
-	error,
 }) {
 	return (
 		<section className="App">
@@ -40,14 +37,20 @@ function AppUi({
 						setNewTodoText={setNewTodoText}
 					/>
 				) : (
-					<TodoList>
-						{loading ? <p>Cargando ...</p> : null}
-						{error ? <p>Hay un error fatal</p> : null}
-						{!loading && todos.length < 1 ? <p>Crea tu primer Todo</p> : null}
-						{!loading && todos.length >= 1
-							? sectionComponents[section]()
-							: null}
-					</TodoList>
+					<TodoContext.Consumer>
+						{({ loading, error, todos, sectionComponents }) => (
+							<TodoList>
+								{loading ? <p>Cargando ...</p> : null}
+								{error ? <p>Hay un error fatal</p> : null}
+								{!loading && todos.length < 1 ? (
+									<p>Crea tu primer Todo</p>
+								) : null}
+								{!loading && todos.length >= 1
+									? sectionComponents[section]()
+									: null}
+							</TodoList>
+						)}
+					</TodoContext.Consumer>
 				)}
 			</div>
 		</section>
