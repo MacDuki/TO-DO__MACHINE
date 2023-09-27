@@ -1,8 +1,11 @@
 import React from "react";
 import { useLocalStorage } from "../App/useLocalStorage";
+import { CreateTodoPanelLeft } from "../CreateTodoPanelLeft";
 import { TodoItemCompleted } from "../TodoItemCompleted/index";
 import { TodoItemPending } from "../TodoItemPending/index";
 import { TodoItemRemoved } from "../TodoItemRemoved/index";
+import { TodoLeftHeader } from "../TodoLeftHeader";
+import { TodoList } from "../TodoList";
 
 const TodoContext = React.createContext();
 
@@ -13,6 +16,8 @@ function TodoProvider({ children }) {
 		error,
 		loading,
 	} = useLocalStorage("TODOS-V1", []);
+	const totalTodos = todos.filter((todo) => !todo.removed).length;
+	const totalCompletedTodos = todos.filter((todo) => !!todo.completed).length;
 	const allPendingTodos = todos.filter(
 		(todo) => !todo.completed && !todo.removed,
 	);
@@ -20,6 +25,7 @@ function TodoProvider({ children }) {
 		(todo) => todo.completed && !todo.removed,
 	);
 	const allRemovedTodos = todos.filter((todo) => todo.removed);
+
 	const handleTodoActions = (text, action) => {
 		const updateTodos = [...todos];
 		const todoIndex = updateTodos.findIndex((todo) => todo.text === text);
@@ -83,13 +89,89 @@ function TodoProvider({ children }) {
 				/>
 			)),
 	};
+
+	// logica para secciones
+	const [section, setSection] = React.useState("pending");
+
+	const sectionSetFunction = {
+		right: () =>
+			setSection((prevSection) =>
+				prevSection === "removed"
+					? "pending"
+					: prevSection === "pending"
+					? "completed"
+					: "removed",
+			),
+		left: () =>
+			setSection((prevSection) =>
+				prevSection === "completed"
+					? "pending"
+					: prevSection === "removed"
+					? "completed"
+					: "removed",
+			),
+	};
+
+	// Logica para crear Todos simples
+	const [newTodoText, setNewTodoText] = React.useState("");
+	const createTodo = () => {
+		const updatedTodos = [...todos];
+		const nuevoTodo = {
+			text: newTodoText,
+			completed: false,
+			removed: false,
+		};
+		updatedTodos.push(nuevoTodo);
+		saveLocalStorage(updatedTodos);
+		setNewTodoText("");
+	};
+	const [showPanel, setShowPanel] = React.useState("hidden");
+	const handlePanelVisibility = (action) => {
+		if (action === "open") {
+			setShowPanel("visible");
+		} else if (action === "close") {
+			setShowPanel("hidden");
+		}
+	};
+
+	function renderContent() {
+		if (showPanel === "visible") {
+			return (
+				<CreateTodoPanelLeft
+					handlePanelVisibility={() => handlePanelVisibility("close")}
+					createTodo={() => createTodo()}
+					newTodoText={newTodoText}
+					setNewTodoText={setNewTodoText}
+				/>
+			);
+		} else {
+			return (
+				<>
+					<TodoLeftHeader
+						handlePanelVisibility={() => handlePanelVisibility("open")}
+						section={section}
+						sectionFunctionRight={() => sectionSetFunction.right()}
+						sectionFunctionLeft={() => sectionSetFunction.left()}
+						completed={totalCompletedTodos}
+						total={totalTodos}
+					/>
+					<TodoList>
+						{loading ? <p>Cargando ...</p> : null}
+						{error ? <p>Hay un error fatal</p> : null}
+						{!loading && todos.length < 1 ? <p>Crea tu primer Todo</p> : null}
+						{!loading && todos.length >= 1
+							? sectionComponents[section]()
+							: null}
+					</TodoList>
+				</>
+			);
+		}
+	}
+
 	return (
 		<TodoContext.Provider
 			value={{
-				loading,
-				error,
-				todos,
-				sectionComponents,
+				renderContent,
 			}}
 		>
 			{children}
