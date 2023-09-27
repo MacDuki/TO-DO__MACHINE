@@ -2,15 +2,17 @@ import { motion } from "framer-motion";
 import React, { useEffect } from "react";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import { BsArrowLeftCircle, BsArrowRightCircle } from "react-icons/bs";
+import { TodoContext } from "../TodoContext";
 import "./TodoLeftHeader.css";
-function TodoLeftHeader({
-	section,
-	sectionFunctionRight,
-	sectionFunctionLeft,
-	total,
-	completed,
-	handlePanelVisibility,
-}) {
+function TodoLeftHeader() {
+	const {
+		handlePanelVisibility,
+		totalTodos,
+		totalCompletedTodos,
+		section,
+		sectionSetFunction,
+	} = React.useContext(TodoContext);
+
 	const [tittle, setTittle] = React.useState("Tasks Pending");
 	const [forceUpdate, setForceUpdate] = React.useState(0);
 	useEffect(() => {
@@ -35,7 +37,7 @@ function TodoLeftHeader({
 					>
 						<BsArrowLeftCircle
 							className="arrow-icons"
-							onClick={sectionFunctionLeft}
+							onClick={() => sectionSetFunction.left()}
 						/>
 					</motion.span>
 					<motion.h2
@@ -54,16 +56,18 @@ function TodoLeftHeader({
 					>
 						<BsArrowRightCircle
 							className="arrow-icons"
-							onClick={sectionFunctionRight}
+							onClick={() => sectionSetFunction.right()}
 						/>
 					</motion.span>
 				</div>
 				<div className="second-container">
 					<h3 className="tasks-counter">
-						{completed}/{total}
+						{totalCompletedTodos}/{totalTodos}
 					</h3>
 					<AiOutlinePlusCircle
-						onClick={handlePanelVisibility}
+						onClick={() => {
+							handlePanelVisibility("open");
+						}}
 						className="plus-icon"
 					/>
 				</div>

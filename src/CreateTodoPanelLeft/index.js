@@ -1,13 +1,17 @@
 import { motion } from "framer-motion";
+import React from "react";
 import { AiOutlineCloseCircle } from "react-icons/ai";
+import { TodoContext } from "../TodoContext";
 import "./CreateTodoPanelLeft.css";
 
-function CreateTodoPanelLeft({
-	handlePanelVisibility,
-	createTodo,
-	newTodoText,
-	setNewTodoText,
-}) {
+function CreateTodoPanelLeft() {
+	const {
+		newTodoText,
+		setNewTodoText,
+		createTodo,
+		handlePanelVisibility,
+		setSection,
+	} = React.useContext(TodoContext);
 	return (
 		<motion.div
 			animate={{ y: 45, x: 15, scale: 1 }}
@@ -16,7 +20,9 @@ function CreateTodoPanelLeft({
 			className="newtodo-panel"
 		>
 			<AiOutlineCloseCircle
-				onClick={handlePanelVisibility}
+				onClick={() => {
+					handlePanelVisibility("close");
+				}}
 				className="plus-icon"
 			/>
 			<input
@@ -28,7 +34,8 @@ function CreateTodoPanelLeft({
 			<button
 				onClick={() => {
 					createTodo();
-					setTimeout(handlePanelVisibility, 100);
+					setTimeout(handlePanelVisibility("close"), 100);
+					setSection("pending");
 				}}
 			>
 				Agregar

@@ -147,14 +147,7 @@ function TodoProvider({ children }) {
 		} else {
 			return (
 				<>
-					<TodoLeftHeader
-						handlePanelVisibility={() => handlePanelVisibility("open")}
-						section={section}
-						sectionFunctionRight={() => sectionSetFunction.right()}
-						sectionFunctionLeft={() => sectionSetFunction.left()}
-						completed={totalCompletedTodos}
-						total={totalTodos}
-					/>
+					<TodoLeftHeader />
 					<TodoList>
 						{loading ? <p>Cargando ...</p> : null}
 						{error ? <p>Hay un error fatal</p> : null}
@@ -172,6 +165,15 @@ function TodoProvider({ children }) {
 		<TodoContext.Provider
 			value={{
 				renderContent,
+				handlePanelVisibility,
+				totalTodos,
+				totalCompletedTodos,
+				section,
+				sectionSetFunction,
+				newTodoText,
+				setNewTodoText,
+				createTodo,
+				setSection,
 			}}
 		>
 			{children}
