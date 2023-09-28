@@ -21,7 +21,7 @@ function CreateTodoPanelLeft() {
 		>
 			<AiOutlineCloseCircle
 				onClick={() => {
-					handlePanelVisibility("close");
+					handlePanelVisibility();
 				}}
 				className="plus-icon"
 			/>
@@ -34,7 +34,7 @@ function CreateTodoPanelLeft() {
 			<button
 				onClick={() => {
 					createTodo();
-					setTimeout(handlePanelVisibility("close"), 100);
+					setTimeout(handlePanelVisibility(), 100);
 					setSection("pending");
 				}}
 			>

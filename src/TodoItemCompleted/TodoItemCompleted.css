@@ -4,7 +4,7 @@
     flex-direction: column;
     border: .1rem solid black;
     transition: opacity 1s ease ;
-    width: 15rem;
+    width: 100%;
   }
   
   .actionsContainerToDo {

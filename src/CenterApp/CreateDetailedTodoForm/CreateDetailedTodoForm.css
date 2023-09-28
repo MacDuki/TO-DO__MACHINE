@@ -1,0 +1,42 @@
+.detailed-form-container {
+    position: absolute;
+    background-color: rgba(30,35,41,.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.detailed-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    border: 1px solid black;
+    padding: 4rem;
+    background-color: black;
+}
+
+.detailed-form label:first-child {
+    font-size: 3rem;
+}
+.detailed-form span:first-child {
+    font-size: 2rem;
+}
+.detailed-form textarea {
+    width: 50rem;
+    height: 20rem;
+}
+.detailed-form div {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    align-items: center;
+    justify-content: center;
+}

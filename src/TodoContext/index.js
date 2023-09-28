@@ -125,25 +125,14 @@ function TodoProvider({ children }) {
 		saveLocalStorage(updatedTodos);
 		setNewTodoText("");
 	};
-	const [showPanel, setShowPanel] = React.useState("hidden");
-	const handlePanelVisibility = (action) => {
-		if (action === "open") {
-			setShowPanel("visible");
-		} else if (action === "close") {
-			setShowPanel("hidden");
-		}
+	const [showPanel, setShowPanel] = React.useState(false);
+	const handlePanelVisibility = () => {
+		setShowPanel((state) => !state);
 	};
 
 	function renderContent() {
-		if (showPanel === "visible") {
-			return (
-				<CreateTodoPanelLeft
-					handlePanelVisibility={() => handlePanelVisibility("close")}
-					createTodo={() => createTodo()}
-					newTodoText={newTodoText}
-					setNewTodoText={setNewTodoText}
-				/>
-			);
+		if (showPanel === true) {
+			return <CreateTodoPanelLeft />;
 		} else {
 			return (
 				<>

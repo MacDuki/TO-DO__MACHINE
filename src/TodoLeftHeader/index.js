@@ -66,7 +66,7 @@ function TodoLeftHeader() {
 					</h3>
 					<AiOutlinePlusCircle
 						onClick={() => {
-							handlePanelVisibility("open");
+							handlePanelVisibility();
 						}}
 						className="plus-icon"
 					/>
