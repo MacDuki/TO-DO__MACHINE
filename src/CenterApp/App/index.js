@@ -11,14 +11,16 @@ function CenterApp() {
 	}
 
 	return (
-		<div className="center-app">
-			{formVisibility ? (
-				<CreateDetailedTodoForm handleFormVisibility={handleFormVisibility} />
-			) : null}
+		<section className="center-section">
+			<div className="center-app">
+				{formVisibility ? (
+					<CreateDetailedTodoForm handleFormVisibility={handleFormVisibility} />
+				) : null}
 
-			<TodoSearch />
-			<CreateDetailedTodo handleFormVisibility={handleFormVisibility} />
-		</div>
+				<TodoSearch />
+				<CreateDetailedTodo handleFormVisibility={handleFormVisibility} />
+			</div>
+		</section>
 	);
 }
 

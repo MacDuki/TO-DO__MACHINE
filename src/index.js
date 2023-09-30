@@ -1,10 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App";
-import CenterApp from "./CenterApp/App";
+import PrincipalApp from "./PrincipalApp/App";
 import "./index.css";
 
-const root = ReactDOM.createRoot(document.getElementById("left-root"));
-root.render(<App />);
-const centerRoot = ReactDOM.createRoot(document.getElementById("center-root"));
-centerRoot.render(<CenterApp />);
+const principalRoot = ReactDOM.createRoot(
+	document.getElementById("principal-root"),
+);
+principalRoot.render(<PrincipalApp />);

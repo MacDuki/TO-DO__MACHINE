@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import React, { useEffect } from "react";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import { BsArrowLeftCircle, BsArrowRightCircle } from "react-icons/bs";
-import { TodoContext } from "../TodoContext";
+import { TodoContext } from "../../TodoContext";
 import "./TodoLeftHeader.css";
 function TodoLeftHeader() {
 	const {

@@ -1,12 +1,11 @@
 import React from "react";
-import { useLocalStorage } from "../App/useLocalStorage";
-import { CreateTodoPanelLeft } from "../CreateTodoPanelLeft";
-import { TodoItemCompleted } from "../TodoItemCompleted/index";
-import { TodoItemPending } from "../TodoItemPending/index";
-import { TodoItemRemoved } from "../TodoItemRemoved/index";
-import { TodoLeftHeader } from "../TodoLeftHeader";
-import { TodoList } from "../TodoList";
-
+import { useLocalStorage } from "../LeftApp/App/useLocalStorage";
+import { CreateTodoPanelLeft } from "../LeftApp/CreateTodoPanelLeft";
+import { TodoItemCompleted } from "../LeftApp/TodoItemCompleted/index";
+import { TodoItemPending } from "../LeftApp/TodoItemPending/index";
+import { TodoItemRemoved } from "../LeftApp/TodoItemRemoved/index";
+import { TodoLeftHeader } from "../LeftApp/TodoLeftHeader/index";
+import { TodoList } from "../LeftApp/TodoList";
 const TodoContext = React.createContext();
 
 function TodoProvider({ children }) {
@@ -114,16 +113,28 @@ function TodoProvider({ children }) {
 
 	// Logica para crear Todos simples
 	const [newTodoText, setNewTodoText] = React.useState("");
-	const createTodo = () => {
+	const [newTodoTextArea, setNewTodoTextArea] = React.useState("");
+	const createTodo = (detailedFlag) => {
 		const updatedTodos = [...todos];
 		const nuevoTodo = {
 			text: newTodoText,
 			completed: false,
 			removed: false,
+			detailed: detailedFlag,
+			textArea: newTodoTextArea,
 		};
-		updatedTodos.push(nuevoTodo);
-		saveLocalStorage(updatedTodos);
-		setNewTodoText("");
+		if (newTodoText === " " || newTodoText.length === 0) {
+			console.log("Nada de vacio perrita");
+		} else if (updatedTodos.every((todo) => todo.text !== newTodoText)) {
+			updatedTodos.push(nuevoTodo);
+			saveLocalStorage(updatedTodos);
+			setNewTodoText("");
+			console.log(`${nuevoTodo.textArea}`);
+			console.log(`${nuevoTodo.detailed}`);
+		} else {
+			setNewTodoText("");
+			console.log("Nada de repetidos perrita");
+		}
 	};
 	const [showPanel, setShowPanel] = React.useState(false);
 	const handlePanelVisibility = () => {
@@ -163,11 +174,12 @@ function TodoProvider({ children }) {
 				setNewTodoText,
 				createTodo,
 				setSection,
+				setNewTodoTextArea,
+				newTodoTextArea,
 			}}
 		>
 			{children}
 		</TodoContext.Provider>
 	);
 }
-
 export { TodoContext, TodoProvider };

@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import React from "react";
 import { AiOutlineCloseCircle } from "react-icons/ai";
-import { TodoContext } from "../TodoContext";
+import { TodoContext } from "../../TodoContext";
 import "./CreateTodoPanelLeft.css";
 
 function CreateTodoPanelLeft() {
@@ -26,6 +26,7 @@ function CreateTodoPanelLeft() {
 				className="plus-icon"
 			/>
 			<input
+				required
 				type="text"
 				placeholder="Nueva tarea..."
 				onChange={(e) => setNewTodoText(e.target.value)}
