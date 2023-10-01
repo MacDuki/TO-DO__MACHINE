@@ -1,9 +1,7 @@
 import React from "react";
 import { useLocalStorage } from "../LeftApp/App/useLocalStorage";
 import { CreateTodoPanelLeft } from "../LeftApp/CreateTodoPanelLeft";
-import { TodoItemCompleted } from "../LeftApp/TodoItemCompleted/index";
-import { TodoItemPending } from "../LeftApp/TodoItemPending/index";
-import { TodoItemRemoved } from "../LeftApp/TodoItemRemoved/index";
+import { TodoItem } from "../LeftApp/TodoItem";
 import { TodoLeftHeader } from "../LeftApp/TodoLeftHeader/index";
 import { TodoList } from "../LeftApp/TodoList";
 const TodoContext = React.createContext();
@@ -49,39 +47,31 @@ function TodoProvider({ children }) {
 
 		saveLocalStorage(updateTodos);
 	};
+
 	const sectionComponents = {
 		pending: () =>
 			allPendingTodos.map((todo) => (
-				<TodoItemPending
-					todos={todos}
-					removed={todo.removed}
-					key={todo.text}
+				<TodoItem
+					section={"pending"}
 					text={todo.text}
-					completed={todo.completed}
 					handleClickCheck={() => handleTodoActions(todo.text, "check")}
 					handleClickRemoved={() => handleTodoActions(todo.text, "removed")}
 				/>
 			)),
 		completed: () =>
 			allCompletedTodos.map((todo) => (
-				<TodoItemCompleted
-					todos={todos}
-					removed={todo.removed}
-					key={todo.text}
+				<TodoItem
+					section={"completed"}
 					text={todo.text}
-					completed={todo.completed}
 					handleClickRemoved={() => handleTodoActions(todo.text, "removed")}
-					handleClickClose={() => handleTodoActions(todo.text, "discarded")}
+					handleClickDiscarded={() => handleTodoActions(todo.text, "discarded")}
 				/>
 			)),
 		removed: () =>
 			allRemovedTodos.map((todo) => (
-				<TodoItemRemoved
-					todos={todos}
-					key={todo.text}
+				<TodoItem
+					section={"removed"}
 					text={todo.text}
-					removed={todo.removed}
-					completed={todo.completed}
 					handleClickCheck={() => handleTodoActions(todo.text, "check")}
 					handleClickDiscarded={() => handleTodoActions(todo.text, "discarded")}
 					handleClickEliminate={() => handleTodoActions(todo.text, "eliminate")}
@@ -136,28 +126,63 @@ function TodoProvider({ children }) {
 			console.log("Nada de repetidos perrita");
 		}
 	};
+
+	// Logica de todos detallados
+	const detailedTodos = todos.filter((todo) => todo.detailed);
+	function handleDetailedTodoForm() {
+		if (newTodoTextArea.length > 1) {
+			detailedFlag = true;
+		} else {
+			detailedFlag = false;
+		}
+		createTodo(detailedFlag);
+		setNewTodoTextArea("");
+		setNewTodoText("");
+	}
+
+	const [showTextArea, setShowTextArea] = React.useState(false);
+	function handleTextAreaChange(event) {
+		setNewTodoTextArea(event.target.value);
+	}
+	function handleNewTodoText(event) {
+		setNewTodoText(event.target.value);
+	}
+
+	// rome-ignore lint/style/useConst: <explanation>
+	let detailedFlag = false;
+
+	///
+
 	const [showPanel, setShowPanel] = React.useState(false);
 	const handlePanelVisibility = () => {
 		setShowPanel((state) => !state);
 	};
 
+	const [formVisibility, setFormVisibility] = React.useState(false);
+	function handleFormVisibility() {
+		setFormVisibility((state) => !state);
+	}
+
 	function renderContent() {
-		if (showPanel === true) {
-			return <CreateTodoPanelLeft />;
+		if (formVisibility) {
 		} else {
-			return (
-				<>
-					<TodoLeftHeader />
-					<TodoList>
-						{loading ? <p>Cargando ...</p> : null}
-						{error ? <p>Hay un error fatal</p> : null}
-						{!loading && todos.length < 1 ? <p>Crea tu primer Todo</p> : null}
-						{!loading && todos.length >= 1
-							? sectionComponents[section]()
-							: null}
-					</TodoList>
-				</>
-			);
+			if (showPanel === true) {
+				return <CreateTodoPanelLeft />;
+			} else {
+				return (
+					<>
+						<TodoLeftHeader />
+						<TodoList>
+							{loading ? <p>Cargando ...</p> : null}
+							{error ? <p>Hay un error fatal</p> : null}
+							{!loading && todos.length < 1 ? <p>Crea tu primer Todo</p> : null}
+							{!loading && todos.length >= 1
+								? sectionComponents[section]()
+								: null}
+						</TodoList>
+					</>
+				);
+			}
 		}
 	}
 
@@ -176,6 +201,15 @@ function TodoProvider({ children }) {
 				setSection,
 				setNewTodoTextArea,
 				newTodoTextArea,
+				handleFormVisibility,
+				formVisibility,
+				showTextArea,
+				setShowTextArea,
+				handleTextAreaChange,
+				handleNewTodoText,
+				detailedFlag,
+				handleDetailedTodoForm,
+				detailedTodos,
 			}}
 		>
 			{children}

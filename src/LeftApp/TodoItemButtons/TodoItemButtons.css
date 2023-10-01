@@ -1,0 +1,62 @@
+.elements-todo-container{
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.actions-container-todo {
+    display: flex;
+    justify-content: right;
+    flex-direction: row-reverse;
+    align-items: center;
+  }  
+
+ 
+  
+  .actions-container-todo span {
+    margin: 0 .4rem;
+  }
+
+  .button-completed {
+    font-size: 1.5rem;
+  }
+
+  .button-completed:hover {
+    color: green;
+    cursor: pointer;
+  }
+
+  .button-restart {
+    font-size: 1.5rem;
+  }
+  .button-restart:hover{
+    color: yellow;
+    cursor: pointer;
+  }
+
+  .button-eliminate {
+    font-size: 1.5rem;
+  }
+  .button-eliminate:hover {
+    color: red;
+    cursor: pointer;
+  }
+
+  .button-discard {
+    font-size: 1.5rem;
+  }
+  
+  .button-discard:hover {
+    color: black;
+    cursor: pointer;
+  }
+
+  .button-details {
+    font-size: 1.5rem;
+  }
+  
+  .button-details:hover {
+    color: blue;
+    cursor: pointer;
+  }

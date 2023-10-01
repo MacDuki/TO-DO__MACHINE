@@ -11,16 +11,12 @@ function CreateDetailedTodoForm({ handleFormVisibility }) {
 		setNewTodoTextArea,
 		newTodoText,
 		setNewTodoText,
+		showTextArea,
+		setShowTextArea,
+		handleTextAreaChange,
+		handleNewTodoText,
+		handleDetailedTodoForm,
 	} = React.useContext(TodoContext);
-	const [showTextArea, setShowTextArea] = React.useState(false);
-	function handleTextAreaChange(event) {
-		setNewTodoTextArea(event.target.value);
-	}
-	function handleNewTodoText(event) {
-		setNewTodoText(event.target.value);
-	}
-
-	let detailedFlag = false;
 
 	return (
 		<div className="detailed-form-container">
@@ -35,14 +31,7 @@ function CreateDetailedTodoForm({ handleFormVisibility }) {
 			<form
 				onSubmit={(event) => {
 					event.preventDefault();
-					if (newTodoTextArea.length > 1) {
-						detailedFlag = true;
-					} else {
-						detailedFlag = false;
-					}
-					createTodo(detailedFlag);
-					setNewTodoTextArea("");
-					setNewTodoText("");
+					handleDetailedTodoForm();
 				}}
 				className="detailed-form"
 			>

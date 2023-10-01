@@ -1,0 +1,12 @@
+.item-todo-left{
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    border: .1rem solid black;
+    width: 17rem;
+  }
+
+.todo-tittle {
+  font-size: 1.3rem;
+}
+  

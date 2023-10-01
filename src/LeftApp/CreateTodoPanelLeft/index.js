@@ -25,22 +25,32 @@ function CreateTodoPanelLeft() {
 				}}
 				className="plus-icon"
 			/>
-			<input
-				required
-				type="text"
-				placeholder="Nueva tarea..."
-				onChange={(e) => setNewTodoText(e.target.value)}
-				value={newTodoText}
-			/>
-			<button
-				onClick={() => {
+			<form
+				onSubmit={(e) => {
+					e.preventDefault();
 					createTodo();
 					setTimeout(handlePanelVisibility(), 100);
 					setSection("pending");
 				}}
 			>
-				Agregar
-			</button>
+				<input
+					required
+					type="text"
+					placeholder="Nueva tarea..."
+					onChange={(e) => setNewTodoText(e.target.value)}
+					value={newTodoText}
+				/>
+				<button
+					type="submit"
+					onClick={() => {
+						createTodo();
+						setTimeout(handlePanelVisibility(), 100);
+						setSection("pending");
+					}}
+				>
+					Agregar
+				</button>
+			</form>
 		</motion.div>
 	);
 }
