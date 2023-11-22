@@ -1,39 +1,37 @@
-
 .header-container {
-    display: inline-flex;
-    flex-direction: column;
-    position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
 }
 
 .first-container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .left-tittle {
-    text-align: center;
-    font-family:'VT323', monospace;
-
+  text-align: center;
+  font-family: "VT323", monospace;
 }
 
 .arrow-icons {
-    width: 2rem;
-    height: 2rem;
-    cursor: pointer;
-    margin: 0 2rem;
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
+  margin: 0 2rem;
 }
 
 .second-container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
 }
 
 .plus-icon {
-    cursor: pointer;
-    width: 2rem;
-    height: 2rem;
+  cursor: pointer;
+  width: 2rem;
+  height: 2rem;
 }
-
