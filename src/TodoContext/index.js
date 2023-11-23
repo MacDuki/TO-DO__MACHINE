@@ -116,12 +116,7 @@ function TodoProvider({ children }) {
 
     const fechaFormateada = `${año}-${mes}-${dia}`;
 
-    if (todayTask === true) {
-      setFechaIndicada(fechaFormateada);
-    } else {
-      setFechaIndicada("2023-11-20");
-    }
-    return fechaIndicada;
+    return todayTask ? fechaFormateada : "2023-11-20";
   }
 
   const createTodo = (detailedFlag) => {

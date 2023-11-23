@@ -11,12 +11,12 @@ function CreateTodoPanelLeft() {
     createTodo,
     handlePanelVisibility,
     setSection,
-    todayTask,
     setTodayTask,
+    todayTask,
   } = React.useContext(TodoContext);
-  const [checkbox, setCheckBox] = React.useState(true);
+
   function handleCheckboxDate() {
-    setCheckBox(!checkbox);
+    setTodayTask(!todayTask);
   }
   return (
     <motion.div
@@ -28,22 +28,15 @@ function CreateTodoPanelLeft() {
       <AiOutlineCloseCircle
         onClick={() => {
           handlePanelVisibility();
-          setTimeout(setCheckBox(true), 500);
         }}
         className="plus-icon"
       />
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          if (checkbox) {
-            setTodayTask(true);
-          } else {
-            setTodayTask(false);
-          }
           createTodo();
           setTimeout(handlePanelVisibility(), 100);
           setSection("pending");
-          setTimeout(setCheckBox(true), 500);
         }}
       >
         <input
@@ -54,10 +47,10 @@ function CreateTodoPanelLeft() {
           value={newTodoText}
         />
         <input
-          checked={checkbox}
+          checked={todayTask}
           id="todayDateCheckbox"
           type="checkbox"
-          onClick={() => {
+          onChange={() => {
             handleCheckboxDate();
           }}
         />
@@ -65,11 +58,6 @@ function CreateTodoPanelLeft() {
         <button
           type="submit"
           onClick={() => {
-            if (checkbox) {
-              setTodayTask(true);
-            } else {
-              setTodayTask(false);
-            }
             createTodo();
             setTimeout(handlePanelVisibility(), 100);
             setSection("pending");
