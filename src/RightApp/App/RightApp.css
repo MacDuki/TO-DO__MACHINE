@@ -18,4 +18,6 @@
 
 .fc-event-main {
   font-size: 0;
+  cursor: pointer;
+  padding: 0.2rem 0;
 }

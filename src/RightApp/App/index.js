@@ -6,12 +6,19 @@ import { TodoContext } from "../../TodoContext";
 
 import "./RightApp.css";
 function RigthApp() {
-  const { formVisibility } = React.useContext(TodoContext);
+  const { formVisibility, todos } = React.useContext(TodoContext);
+  const updatedTodos = todos.map(({ text, date, color }) => ({
+    title: text,
+    date,
+    color,
+  }));
+  const [calendarEvents, setCalendarEvents] = React.useState(updatedTodos);
 
-  const [calendarEvents, setCalendarEvents] = React.useState([
-    { title: "Prueba", date: "2023-11-21" },
-    { title: "event 2", date: "2023-11-21", color: "red" },
-  ]);
+  console.log(updatedTodos);
+
+  function handleCalendarEvents(arg) {
+    console.log(arg);
+  }
 
   return (
     <>
@@ -21,11 +28,14 @@ function RigthApp() {
             headerToolbar={{
               end: "prev,next",
             }}
+            select={handleCalendarEvents}
             aspectRatio={4}
             plugins={[dayGridPlugin, interactionPlugin]}
             events={calendarEvents}
             initialView="dayGridMonth"
             height="800px"
+            selectable
+            editable
           />
         </section>
       ) : null}
