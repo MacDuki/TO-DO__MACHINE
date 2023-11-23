@@ -7,17 +7,11 @@ import { TodoContext } from "../../TodoContext";
 import "./RightApp.css";
 function RigthApp() {
   const { formVisibility, todos } = React.useContext(TodoContext);
-  const updatedTodos = todos.map(({ text, date, color }) => ({
-    title: text,
-    date,
-    color,
-  }));
-  const [calendarEvents, setCalendarEvents] = React.useState(updatedTodos);
 
-  console.log(updatedTodos);
+  const [calendarEvents, setCalendarEvents] = React.useState(todos);
 
   function handleCalendarEvents(arg) {
-    console.log(arg);
+    console.log(arg.event);
   }
 
   return (
