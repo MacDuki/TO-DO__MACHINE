@@ -21,12 +21,11 @@ function RigthApp() {
             headerToolbar={{
               end: "prev,next",
             }}
-            height={"90vh"}
-            width={"80%"}
-            aspectRatio={1}
+            aspectRatio={4}
             plugins={[dayGridPlugin, interactionPlugin]}
             events={calendarEvents}
             initialView="dayGridMonth"
+            height="800px"
           />
         </section>
       ) : null}
