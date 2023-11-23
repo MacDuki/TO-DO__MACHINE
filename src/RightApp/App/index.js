@@ -29,7 +29,6 @@ function RigthApp() {
             initialView="dayGridMonth"
             height="800px"
             selectable
-            editable
           />
         </section>
       ) : null}

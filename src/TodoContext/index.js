@@ -109,7 +109,7 @@ function TodoProvider({ children }) {
     const updatedTodos = [...todos];
     const nuevoTodo = {
       text: newTodoText,
-      start: "22-11-2023",
+      date: "2023-11-23",
       allDay: true,
       color: "red",
       completed: false,
