@@ -13,6 +13,7 @@ function CreateTodoPanelLeft() {
     setSection,
     setTodayTask,
     todayTask,
+    setFechaIndicada,
   } = React.useContext(TodoContext);
 
   function handleCheckboxDate() {
@@ -46,6 +47,7 @@ function CreateTodoPanelLeft() {
           onChange={(e) => setNewTodoText(e.target.value)}
           value={newTodoText}
         />
+        <label>Para hoy?</label>
         <input
           checked={todayTask}
           id="todayDateCheckbox"
@@ -54,7 +56,13 @@ function CreateTodoPanelLeft() {
             handleCheckboxDate();
           }}
         />
-        <label>Para hoy?</label>
+        {todayTask ? null : (
+          <input
+            type="date"
+            onChange={(e) => setFechaIndicada(e.target.value)}
+          />
+        )}
+
         <button
           type="submit"
           onClick={() => {

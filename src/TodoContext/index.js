@@ -116,7 +116,7 @@ function TodoProvider({ children }) {
 
     const fechaFormateada = `${año}-${mes}-${dia}`;
 
-    return todayTask ? fechaFormateada : "2023-11-20";
+    return todayTask ? fechaFormateada : fechaIndicada;
   }
 
   const createTodo = (detailedFlag) => {
@@ -234,6 +234,7 @@ function TodoProvider({ children }) {
         allPendingTodos,
         todayTask,
         setTodayTask,
+        setFechaIndicada,
       }}
     >
       {children}
