@@ -102,14 +102,34 @@ function TodoProvider({ children }) {
   };
 
   // Logica para crear Todos simples
+  const [todayTask, setTodayTask] = React.useState(true);
+
   const [newTodoText, setNewTodoText] = React.useState("");
   const [newTodoTextArea, setNewTodoTextArea] = React.useState("");
+  const [fechaIndicada, setFechaIndicada] = React.useState();
+  function obtenerFechaActual() {
+    const fecha = new Date();
+
+    const año = fecha.getFullYear();
+    const mes = String(fecha.getMonth() + 1).padStart(2, "0");
+    const dia = String(fecha.getDate()).padStart(2, "0");
+
+    const fechaFormateada = `${año}-${mes}-${dia}`;
+
+    if (todayTask === true) {
+      setFechaIndicada(fechaFormateada);
+    } else {
+      setFechaIndicada("2023-11-20");
+    }
+    return fechaIndicada;
+  }
 
   const createTodo = (detailedFlag) => {
     const updatedTodos = [...todos];
+
     const nuevoTodo = {
       text: newTodoText,
-      date: "2023-11-23",
+      date: obtenerFechaActual(),
       allDay: true,
       color: "red",
       completed: false,
@@ -217,6 +237,8 @@ function TodoProvider({ children }) {
         detailedTodos,
         todos,
         allPendingTodos,
+        todayTask,
+        setTodayTask,
       }}
     >
       {children}
