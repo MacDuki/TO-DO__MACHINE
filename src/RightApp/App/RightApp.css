@@ -17,7 +17,8 @@
 }
 
 .fc-event-main {
-  font-size: 0;
+  font-size: xx-small;
+  color: black;
   cursor: pointer;
   padding: 0.2rem 0;
 }

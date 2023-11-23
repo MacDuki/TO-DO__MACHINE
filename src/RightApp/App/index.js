@@ -1,14 +1,31 @@
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import FullCalendar from "@fullcalendar/react";
-import React from "react";
+import React, { useEffect } from "react";
 import { TodoContext } from "../../TodoContext";
 
 import "./RightApp.css";
 function RigthApp() {
-  const { formVisibility, todos } = React.useContext(TodoContext);
+  const { formVisibility, todos, allPendingTodos } =
+    React.useContext(TodoContext);
+  const calendarList = todos.map(({ text, date, color }) => ({
+    title: text,
+    date,
+    color,
+  }));
 
-  const [calendarEvents, setCalendarEvents] = React.useState(todos);
+  useEffect(() => {
+    const updatedCalendarList = allPendingTodos.map(
+      ({ text, date, color }) => ({
+        title: text,
+        date,
+        color,
+      })
+    );
+    setCalendarEvents(updatedCalendarList);
+  }, [todos, allPendingTodos]);
+
+  const [calendarEvents, setCalendarEvents] = React.useState(calendarList);
 
   function handleCalendarEvents(arg) {
     console.log(arg.event);

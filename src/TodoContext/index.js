@@ -216,6 +216,7 @@ function TodoProvider({ children }) {
         handleDetailedTodoForm,
         detailedTodos,
         todos,
+        allPendingTodos,
       }}
     >
       {children}
