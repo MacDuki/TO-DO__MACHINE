@@ -31,7 +31,8 @@ function RigthApp() {
     const eventsDaySelected = allPendingTodos.filter(
       (todo) => todo.date === arg.dateStr
     );
-    console.log(eventsDaySelected);
+    const propertyXValues = eventsDaySelected.map((event) => event.text);
+    alert(propertyXValues);
   };
 
   return (
