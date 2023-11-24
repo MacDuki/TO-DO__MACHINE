@@ -131,6 +131,7 @@ function TodoProvider({ children }) {
       removed: false,
       detailed: detailedFlag,
       textArea: newTodoTextArea,
+      id: "a",
     };
 
     if (newTodoText === " " || newTodoText.length === 0) {

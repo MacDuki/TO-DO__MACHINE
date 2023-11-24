@@ -3,9 +3,8 @@ import interactionPlugin from "@fullcalendar/interaction";
 import FullCalendar from "@fullcalendar/react";
 import React, { useEffect } from "react";
 import { TodoContext } from "../../TodoContext";
-import { handleDaySelected } from "../functions/handleDaySelected";
-
 import "./RightApp.css";
+
 function RigthApp() {
   const { formVisibility, todos, allPendingTodos } =
     React.useContext(TodoContext);
@@ -28,6 +27,13 @@ function RigthApp() {
 
   const [calendarEvents, setCalendarEvents] = React.useState(calendarList);
 
+  const handleDaySelected = (arg) => {
+    const eventsDaySelected = allPendingTodos.filter(
+      (todo) => todo.date === arg.dateStr
+    );
+    console.log(eventsDaySelected);
+  };
+
   return (
     <>
       {!formVisibility ? (
@@ -44,6 +50,7 @@ function RigthApp() {
             eventInteractive
             eventDisplay="list-item"
             dateClick={handleDaySelected}
+            eventClick={handleDaySelected}
           />
         </section>
       ) : null}
