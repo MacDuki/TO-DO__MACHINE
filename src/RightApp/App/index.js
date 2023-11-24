@@ -3,6 +3,7 @@ import interactionPlugin from "@fullcalendar/interaction";
 import FullCalendar from "@fullcalendar/react";
 import React, { useEffect } from "react";
 import { TodoContext } from "../../TodoContext";
+import { handleDaySelected } from "../functions/handleDaySelected";
 
 import "./RightApp.css";
 function RigthApp() {
@@ -27,10 +28,6 @@ function RigthApp() {
 
   const [calendarEvents, setCalendarEvents] = React.useState(calendarList);
 
-  function handleCalendarEvents(arg) {
-    console.log(arg.event);
-  }
-
   return (
     <>
       {!formVisibility ? (
@@ -39,13 +36,14 @@ function RigthApp() {
             headerToolbar={{
               end: "prev,next",
             }}
-            select={handleCalendarEvents}
             aspectRatio={4}
             plugins={[dayGridPlugin, interactionPlugin]}
             events={calendarEvents}
-            initialView="dayGridMonth"
             height="800px"
             selectable
+            eventInteractive
+            eventDisplay="list-item"
+            dateClick={handleDaySelected}
           />
         </section>
       ) : null}
