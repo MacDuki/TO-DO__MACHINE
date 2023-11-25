@@ -6,26 +6,40 @@ import { TodoContext } from "../../TodoContext";
 import "./RightApp.css";
 
 function RigthApp() {
-  const { formVisibility, todos, allPendingTodos } =
-    React.useContext(TodoContext);
-  const calendarList = todos.map(({ text, date, color }) => ({
-    title: text,
-    date,
-    color,
-  }));
+  const {
+    formVisibility,
+    todos,
+    allPendingTodos,
+    allCompletedTodos,
+    allRemovedTodos,
+    section,
+  } = React.useContext(TodoContext);
 
   useEffect(() => {
-    const updatedCalendarList = allPendingTodos.map(
-      ({ text, date, color }) => ({
+    let updatedCalendarList;
+    if (section === "pending") {
+      updatedCalendarList = allPendingTodos.map(({ text, date, color }) => ({
         title: text,
         date,
         color,
-      })
-    );
+      }));
+    } else if (section === "completed") {
+      updatedCalendarList = allCompletedTodos.map(({ text, date, color }) => ({
+        title: text,
+        date,
+        color,
+      }));
+    } else {
+      updatedCalendarList = allRemovedTodos.map(({ text, date, color }) => ({
+        title: text,
+        date,
+        color,
+      }));
+    }
     setCalendarEvents(updatedCalendarList);
-  }, [todos, allPendingTodos]);
+  }, [todos, allPendingTodos, allCompletedTodos, allRemovedTodos, section]);
 
-  const [calendarEvents, setCalendarEvents] = React.useState(calendarList);
+  const [calendarEvents, setCalendarEvents] = React.useState();
 
   const handleDaySelected = (arg) => {
     const eventsDaySelected = allPendingTodos.filter(

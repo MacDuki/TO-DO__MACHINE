@@ -233,6 +233,8 @@ function TodoProvider({ children }) {
         detailedTodos,
         todos,
         allPendingTodos,
+        allCompletedTodos,
+        allRemovedTodos,
         todayTask,
         setTodayTask,
         setFechaIndicada,
