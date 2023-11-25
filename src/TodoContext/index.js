@@ -2,8 +2,8 @@ import React from "react";
 import { useLocalStorage } from "../LeftApp/App/useLocalStorage";
 import { CreateTodoPanelLeft } from "../LeftApp/CreateTodoPanelLeft";
 import { TodoItem } from "../LeftApp/TodoItem";
-import { TodoLeftHeader } from "../LeftApp/TodoLeftHeader/index";
 import { TodoList } from "../LeftApp/TodoList";
+import { TodoSearch } from "../LeftApp/TodoSearch";
 const TodoContext = React.createContext();
 
 function TodoProvider({ children }) {
@@ -192,7 +192,7 @@ function TodoProvider({ children }) {
       } else {
         return (
           <>
-            <TodoLeftHeader />
+            <TodoSearch />
             <TodoList>
               {loading ? <p>Cargando ...</p> : null}
               {error ? <p>Hay un error fatal</p> : null}
