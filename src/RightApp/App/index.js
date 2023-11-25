@@ -40,6 +40,7 @@ function RigthApp() {
   }, [todos, allPendingTodos, allCompletedTodos, allRemovedTodos, section]);
 
   const [calendarEvents, setCalendarEvents] = React.useState();
+  const [propertyEventsValues, setPropertyEventsValues] = React.useState([]);
 
   const handleDaySelected = (arg) => {
     let eventsDaySelected;
@@ -57,28 +58,39 @@ function RigthApp() {
       );
     }
 
-    const propertyEventsValues = eventsDaySelected.map((event) => event.text);
-    alert(propertyEventsValues);
+    const eventsValues = eventsDaySelected.map((event) => event.text);
+    setPropertyEventsValues(eventsValues);
+
+    setShowPanelDay(true);
   };
+  const [showPanelDay, setShowPanelDay] = React.useState(false);
 
   return (
     <>
       {!formVisibility ? (
         <section className="right-section">
-          <FullCalendar
-            headerToolbar={{
-              end: "prev,next",
-            }}
-            aspectRatio={4}
-            plugins={[dayGridPlugin, interactionPlugin]}
-            events={calendarEvents}
-            height="800px"
-            selectable
-            eventInteractive
-            eventDisplay="list-item"
-            dateClick={handleDaySelected}
-            eventClick={handleDaySelected}
-          />
+          {!showPanelDay ? (
+            <FullCalendar
+              headerToolbar={{
+                end: "prev,next",
+              }}
+              aspectRatio={4}
+              plugins={[dayGridPlugin, interactionPlugin]}
+              events={calendarEvents}
+              height="800px"
+              selectable
+              eventInteractive
+              eventDisplay="list-item"
+              dateClick={handleDaySelected}
+              eventClick={handleDaySelected}
+            />
+          ) : (
+            <div>
+              {propertyEventsValues.map((value, index) => (
+                <div key={index}>{value}</div>
+              ))}
+            </div>
+          )}
         </section>
       ) : null}
     </>
