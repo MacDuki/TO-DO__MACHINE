@@ -42,11 +42,23 @@ function RigthApp() {
   const [calendarEvents, setCalendarEvents] = React.useState();
 
   const handleDaySelected = (arg) => {
-    const eventsDaySelected = allPendingTodos.filter(
-      (todo) => todo.date === arg.dateStr
-    );
-    const propertyXValues = eventsDaySelected.map((event) => event.text);
-    alert(propertyXValues);
+    let eventsDaySelected;
+    if (section === "pending") {
+      eventsDaySelected = allPendingTodos.filter(
+        (todo) => todo.date === arg.dateStr
+      );
+    } else if (section === "completed") {
+      eventsDaySelected = allCompletedTodos.filter(
+        (todo) => todo.date === arg.dateStr
+      );
+    } else {
+      eventsDaySelected = allRemovedTodos.filter(
+        (todo) => todo.date === arg.dateStr
+      );
+    }
+
+    const propertyEventsValues = eventsDaySelected.map((event) => event.text);
+    alert(propertyEventsValues);
   };
 
   return (
