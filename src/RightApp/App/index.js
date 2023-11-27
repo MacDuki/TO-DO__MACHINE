@@ -2,6 +2,7 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import FullCalendar from "@fullcalendar/react";
 import React, { useEffect } from "react";
+import { IoIosCloseCircleOutline } from "react-icons/io";
 import { TodoContext } from "../../TodoContext";
 import "./RightApp.css";
 
@@ -58,7 +59,14 @@ function RigthApp() {
       );
     }
 
-    const eventsValues = eventsDaySelected.map((event) => event.text);
+    const eventsValues = eventsDaySelected.map((event) => [
+      event.text,
+      event.date,
+      event.color,
+      event.detailed,
+      event.completed,
+      event.removed,
+    ]);
     setPropertyEventsValues(eventsValues);
 
     setShowPanelDay(true);
@@ -86,8 +94,22 @@ function RigthApp() {
             />
           ) : (
             <div>
+              <IoIosCloseCircleOutline
+                onClick={() => {
+                  setShowPanelDay(false);
+                }}
+              />
               {propertyEventsValues.map((value, index) => (
-                <div key={index}>{value}</div>
+                <div key={index}>
+                  {value}
+                  {value[4] ? (
+                    <div>Completado</div>
+                  ) : value[5] ? (
+                    <div>Removido</div>
+                  ) : (
+                    <div>Pendiente</div>
+                  )}
+                </div>
               ))}
             </div>
           )}
