@@ -2,7 +2,10 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import FullCalendar from "@fullcalendar/react";
 import React, { useEffect } from "react";
+import { AiOutlineCloseCircle, AiOutlineReload } from "react-icons/ai";
+import { BsTrash } from "react-icons/bs";
 import { IoIosCloseCircleOutline } from "react-icons/io";
+import { MdOutlineTaskAlt } from "react-icons/md";
 import { TodoContext } from "../../TodoContext";
 import "./RightApp.css";
 
@@ -14,6 +17,7 @@ function RigthApp() {
     allCompletedTodos,
     allRemovedTodos,
     section,
+    handleTodoActions,
   } = React.useContext(TodoContext);
 
   useEffect(() => {
@@ -103,11 +107,24 @@ function RigthApp() {
                 <div key={index}>
                   {value}
                   {value[4] ? (
-                    <div>Completado</div>
+                    <div>
+                      Completado
+                      <AiOutlineReload />
+                      <AiOutlineCloseCircle />
+                    </div>
                   ) : value[5] ? (
-                    <div>Removido</div>
+                    <div>
+                      Removido
+                      <BsTrash />
+                      <MdOutlineTaskAlt />
+                      <AiOutlineReload />
+                    </div>
                   ) : (
-                    <div>Pendiente</div>
+                    <div>
+                      Pendiente
+                      <MdOutlineTaskAlt />
+                      <AiOutlineCloseCircle />
+                    </div>
                   )}
                 </div>
               ))}

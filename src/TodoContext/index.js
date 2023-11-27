@@ -237,6 +237,7 @@ function TodoProvider({ children }) {
         todayTask,
         setTodayTask,
         setFechaIndicada,
+        handleTodoActions,
       }}
     >
       {children}
