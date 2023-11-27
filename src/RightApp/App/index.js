@@ -109,21 +109,49 @@ function RigthApp() {
                   {value[4] ? (
                     <div>
                       Completado
-                      <AiOutlineReload />
-                      <AiOutlineCloseCircle />
+                      <AiOutlineReload
+                        onClick={() => {
+                          handleTodoActions(value[0], "discarded");
+                        }}
+                      />
+                      <AiOutlineCloseCircle
+                        onClick={() => {
+                          handleTodoActions(value[0], "removed");
+                        }}
+                      />
                     </div>
                   ) : value[5] ? (
                     <div>
                       Removido
-                      <BsTrash />
-                      <MdOutlineTaskAlt />
-                      <AiOutlineReload />
+                      <BsTrash
+                        onClick={() => {
+                          handleTodoActions(value[0], "eliminate");
+                        }}
+                      />
+                      <MdOutlineTaskAlt
+                        onClick={() => {
+                          handleTodoActions(value[0], "check");
+                        }}
+                      />
+                      <AiOutlineReload
+                        onClick={() => {
+                          handleTodoActions(value[0], "discarded");
+                        }}
+                      />
                     </div>
                   ) : (
                     <div>
                       Pendiente
-                      <MdOutlineTaskAlt />
-                      <AiOutlineCloseCircle />
+                      <MdOutlineTaskAlt
+                        onClick={() => {
+                          handleTodoActions(value[0], "check");
+                        }}
+                      />
+                      <AiOutlineCloseCircle
+                        onClick={() => {
+                          handleTodoActions(value[0], "removed");
+                        }}
+                      />
                     </div>
                   )}
                 </div>
