@@ -19,6 +19,9 @@ function RigthApp() {
     section,
     handleTodoActions,
   } = React.useContext(TodoContext);
+  const [calendarEvents, setCalendarEvents] = React.useState();
+  const [propertyEventsValues, setPropertyEventsValues] = React.useState([]);
+  const [showPanelDay, setShowPanelDay] = React.useState(false);
 
   useEffect(() => {
     let updatedCalendarList;
@@ -44,11 +47,9 @@ function RigthApp() {
     setCalendarEvents(updatedCalendarList);
   }, [todos, allPendingTodos, allCompletedTodos, allRemovedTodos, section]);
 
-  const [calendarEvents, setCalendarEvents] = React.useState();
-  const [propertyEventsValues, setPropertyEventsValues] = React.useState([]);
-
+  let eventsDaySelected;
+  let eventsValues;
   const handleDaySelected = (arg) => {
-    let eventsDaySelected;
     if (section === "pending") {
       eventsDaySelected = allPendingTodos.filter(
         (todo) => todo.date === arg.dateStr
@@ -63,7 +64,7 @@ function RigthApp() {
       );
     }
 
-    const eventsValues = eventsDaySelected.map((event) => [
+    eventsValues = eventsDaySelected.map((event) => [
       event.text,
       event.date,
       event.color,
@@ -75,7 +76,29 @@ function RigthApp() {
 
     setShowPanelDay(true);
   };
-  const [showPanelDay, setShowPanelDay] = React.useState(false);
+
+  useEffect(() => {
+    const eventsDaySelected = todos.filter(
+      (todo) => todo.date === propertyEventsValues[0]?.[1]
+    );
+
+    eventsValues = eventsDaySelected.map((event) => [
+      event.text,
+      event.date,
+      event.color,
+      event.detailed,
+      event.completed,
+      event.removed,
+    ]);
+    setPropertyEventsValues(eventsValues);
+  }, [
+    todos,
+    allPendingTodos,
+    allCompletedTodos,
+    allRemovedTodos,
+    section,
+    eventsValues,
+  ]);
 
   return (
     <>
