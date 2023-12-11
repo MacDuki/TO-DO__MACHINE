@@ -50,33 +50,48 @@ function TodoProvider({ children }) {
 
   const sectionComponents = {
     pending: () =>
-      allPendingTodos.map((todo) => (
-        <TodoItem
-          section={"pending"}
-          text={todo.text}
-          handleClickCheck={() => handleTodoActions(todo.text, "check")}
-          handleClickRemoved={() => handleTodoActions(todo.text, "removed")}
-        />
-      )),
+      allPendingTodos
+        .filter((todo) => todo.date === selectedDay) // Filtrar por fecha
+        .map((todo) => (
+          <TodoItem
+            key={todo.id}
+            section={"pending"}
+            text={todo.text}
+            handleClickCheck={() => handleTodoActions(todo.text, "check")}
+            handleClickRemoved={() => handleTodoActions(todo.text, "removed")}
+          />
+        )),
     completed: () =>
-      allCompletedTodos.map((todo) => (
-        <TodoItem
-          section={"completed"}
-          text={todo.text}
-          handleClickRemoved={() => handleTodoActions(todo.text, "removed")}
-          handleClickDiscarded={() => handleTodoActions(todo.text, "discarded")}
-        />
-      )),
+      allCompletedTodos
+        .filter((todo) => todo.date === selectedDay) // Filtrar por fecha
+        .map((todo) => (
+          <TodoItem
+            key={todo.id}
+            section={"completed"}
+            text={todo.text}
+            handleClickRemoved={() => handleTodoActions(todo.text, "removed")}
+            handleClickDiscarded={() =>
+              handleTodoActions(todo.text, "discarded")
+            }
+          />
+        )),
     removed: () =>
-      allRemovedTodos.map((todo) => (
-        <TodoItem
-          section={"removed"}
-          text={todo.text}
-          handleClickCheck={() => handleTodoActions(todo.text, "check")}
-          handleClickDiscarded={() => handleTodoActions(todo.text, "discarded")}
-          handleClickEliminate={() => handleTodoActions(todo.text, "eliminate")}
-        />
-      )),
+      allRemovedTodos
+        .filter((todo) => todo.date === selectedDay) // Filtrar por fecha
+        .map((todo) => (
+          <TodoItem
+            key={todo.id}
+            section={"removed"}
+            text={todo.text}
+            handleClickCheck={() => handleTodoActions(todo.text, "check")}
+            handleClickDiscarded={() =>
+              handleTodoActions(todo.text, "discarded")
+            }
+            handleClickEliminate={() =>
+              handleTodoActions(todo.text, "eliminate")
+            }
+          />
+        )),
   };
 
   // logica para secciones
@@ -115,7 +130,6 @@ function TodoProvider({ children }) {
     const dia = String(fecha.getDate()).padStart(2, "0");
 
     const fechaFormateada = `${año}-${mes}-${dia}`;
-
     return todayTask ? fechaFormateada : fechaIndicada;
   }
 
@@ -206,6 +220,10 @@ function TodoProvider({ children }) {
     }
   }
 
+  const [selectDayPanel, setSelectDayPanel] = React.useState(false);
+  const [selectedDay, setSelectedDay] = React.useState();
+  const [eventsDayLeft, setEventsDayLeft] = React.useState();
+
   return (
     <TodoContext.Provider
       value={{
@@ -238,6 +256,10 @@ function TodoProvider({ children }) {
         setTodayTask,
         setFechaIndicada,
         handleTodoActions,
+        selectDayPanel,
+        setSelectDayPanel,
+        selectedDay,
+        setSelectedDay,
       }}
     >
       {children}

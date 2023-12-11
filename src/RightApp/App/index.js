@@ -142,6 +142,11 @@ function RigthApp() {
                           handleTodoActions(value[0], "removed");
                         }}
                       />
+                      <BsTrash
+                        onClick={() => {
+                          handleTodoActions(value[0], "eliminate");
+                        }}
+                      />
                     </div>
                   ) : value[5] ? (
                     <div>
